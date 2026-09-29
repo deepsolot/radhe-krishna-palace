@@ -4,7 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Official Owner Contact Details
+  // Initialize Official Owner Contact Details (Primary: +919696619832)
   const defaultContact = {
     phone: '+919696619832',
     phoneDisplay: '+91 96966 19832',
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let currentContact = { ...defaultContact };
-  const savedContact = localStorage.getItem('radhe_palace_contact_v3');
+  const savedContact = localStorage.getItem('radhe_palace_contact_v4');
   if (savedContact) {
     try {
       currentContact = { ...defaultContact, ...JSON.parse(savedContact) };
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Hotel Radhe Krishna Palace'
     };
 
-    localStorage.setItem('radhe_palace_contact_v3', JSON.stringify(currentContact));
+    localStorage.setItem('radhe_palace_contact_v4', JSON.stringify(currentContact));
     updateDOMContacts();
     closeCustomizer();
     showToast('✅ Contact numbers updated! Try testing the WhatsApp or Call buttons now.');
