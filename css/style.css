@@ -2137,3 +2137,154 @@ h1, h2, h3, h4, h5, h6 {
 .btn-save-customizer:hover {
   background: var(--gradient-gold-hover);
 }
+
+/* ==========================================================================
+   LUXURY OPENING SPLASH & DYNAMIC ANIMATIONS
+   ========================================================================== */
+
+/* Royal Opening Curtain */
+.royal-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #171F30 0%, #080C14 100%);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.75s ease;
+  pointer-events: all;
+}
+
+.royal-preloader.loaded {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader-emblem {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.preloader-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--color-primary-light);
+  border-bottom-color: var(--color-primary-dark);
+  animation: spinRing 1.8s linear infinite;
+}
+
+.preloader-monogram {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.preloader-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.35rem;
+  text-align: center;
+  animation: preloaderPulse 1.8s ease-in-out infinite;
+}
+
+.preloader-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-primary-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes preloaderPulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Dynamic Golden Wave Text Shimmer */
+.gold-gradient-text {
+  background: linear-gradient(90deg, #F9D976 0%, #FFF4D0 25%, #D4AF37 50%, #FFF4D0 75%, #F9D976 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldTextShine 6s linear infinite;
+}
+
+@keyframes goldTextShine {
+  to { background-position: 200% center; }
+}
+
+/* Floating Gentle Bobbing Animation */
+.floating-gentle {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* Scroll Entrance Animations */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay classes */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* Enhanced Room Image Hover and Badge Shimmer */
+.featured-ribbon {
+  background: linear-gradient(90deg, #D4AF37 0%, #FEE499 50%, #D4AF37 100%);
+  background-size: 200% auto;
+  animation: ribbonGleam 3s linear infinite;
+}
+
+@keyframes ribbonGleam {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Subtle Golden Ambient Glow on Cards */
+.room-card:hover {
+  border-color: rgba(246, 226, 122, 0.6);
+  box-shadow: 0 15px 45px rgba(212, 175, 55, 0.25), 0 0 25px rgba(212, 175, 55, 0.15);
+}
+

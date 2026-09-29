@@ -372,4 +372,39 @@ document.addEventListener('DOMContentLoaded', () => {
       toast.style.transform = 'translateX(-50%) translateY(10px)';
     }, 3800);
   }
+
+  // Royal Preloader Curtain Reveal
+  const preloader = document.getElementById('royalPreloader');
+  if (preloader) {
+    const hidePreloader = () => {
+      setTimeout(() => {
+        preloader.classList.add('loaded');
+      }, 750);
+    };
+
+    if (document.readyState === 'complete') {
+      hidePreloader();
+    } else {
+      window.addEventListener('load', hidePreloader);
+      // Fallback
+      setTimeout(hidePreloader, 1500);
+    }
+  }
+
+  // Scroll Reveal Animations via IntersectionObserver
+  const revealElements = document.querySelectorAll('.reveal-init');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(el => observer.observe(el));
+  } else {
+    revealElements.forEach(el => el.classList.add('reveal-visible'));
+  }
 });

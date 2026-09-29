@@ -60,6 +60,18 @@
 <body>
 
   <!-- ==========================================================================
+       ROYAL OPENING PRELOADER & WELCOME REVEAL
+       ========================================================================== -->
+  <div class="royal-preloader" id="royalPreloader">
+    <div class="preloader-emblem">
+      <div class="preloader-ring"></div>
+      <div class="preloader-monogram">RKP</div>
+    </div>
+    <div class="preloader-title">Hotel Radhe Krishna Palace</div>
+    <div class="preloader-subtitle">Varanasi • Sacred Hospitality</div>
+  </div>
+
+  <!-- ==========================================================================
        TOP ANNOUNCEMENT BAR (Guest Privilege & Direct Reservation Info)
        ========================================================================== -->
   <aside class="hotel-announcement-bar" aria-label="Hotel Announcement">
@@ -228,7 +240,7 @@
          ========================================================================== -->
     <section class="booking-engine-wrapper" id="booking-engine">
       <div class="container">
-        <div class="booking-card">
+        <div class="booking-card reveal-init">
           <div class="booking-card-header">
             <div class="booking-heading">
               <i class="fa-solid fa-shield-halved" style="color:var(--color-primary-light);"></i>
@@ -313,25 +325,25 @@
     <section class="direct-perks-section">
       <div class="container">
         <div class="perks-grid">
-          <div class="perk-box">
+          <div class="perk-box reveal-init">
             <div class="perk-icon"><i class="fa-solid fa-tags"></i></div>
             <h4>Best Direct Rate</h4>
             <p>Save 15% to 20% compared to third-party travel apps by booking directly with our front desk.</p>
           </div>
 
-          <div class="perk-box">
+          <div class="perk-box reveal-init">
             <div class="perk-icon"><i class="fa-brands fa-whatsapp"></i></div>
             <h4>1-Tap WhatsApp Booking</h4>
             <p>Direct confirmation from hotel management with instant receipt and zero commission markup.</p>
           </div>
 
-          <div class="perk-box">
+          <div class="perk-box reveal-init">
             <div class="perk-icon"><i class="fa-solid fa-hand-holding-medical"></i></div>
             <h4>Hospital Care Concessions</h4>
             <p>Special compassionate rates and quiet sanitized rooms for MPMMCC Cancer Centre caregivers.</p>
           </div>
 
-          <div class="perk-box">
+          <div class="perk-box reveal-init">
             <div class="perk-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
             <h4>Strategic Location</h4>
             <p>2 mins to Cancer Hospital, 5 mins to BHU, and 10 mins to Assi Ghat Ganga Aarti.</p>
@@ -354,10 +366,10 @@
         </div>
 
         <div class="rooms-grid">
-          <!-- Room 1: Standard Non-AC -->
-          <div class="room-card">
+          <!-- Room 1: Standard Budget Room (1st photo) -->
+          <div class="room-card reveal-init delay-1">
             <div class="room-thumb-wrapper">
-              <img src="assets/images/hotel-corridor.png" alt="Standard Budget Room at Hotel Radhe Krishna Palace">
+              <img src="assets/images/standard-room.jpg" alt="Standard Budget Room at Hotel Radhe Krishna Palace">
               <div class="room-price-badge">
                 <span class="room-price-val">₹899</span>
                 <span class="room-price-period">/ night</span>
@@ -383,11 +395,11 @@
             </div>
           </div>
 
-          <!-- Room 2: Deluxe AC (Featured) -->
-          <div class="room-card featured">
+          <!-- Room 2: Deluxe AC Room (2nd photo) -->
+          <div class="room-card featured reveal-init delay-2">
             <div class="featured-ribbon">Most Popular</div>
             <div class="room-thumb-wrapper">
-              <img src="assets/images/deluxe-bedroom.png" alt="Deluxe AC Bedroom at Hotel Radhe Krishna Palace Varanasi">
+              <img src="assets/images/deluxe-ac-room.jpg" alt="Deluxe AC Bedroom at Hotel Radhe Krishna Palace Varanasi">
               <div class="room-price-badge">
                 <span class="room-price-val">₹1,299</span>
                 <span class="room-price-period">/ night</span>
@@ -414,10 +426,10 @@
             </div>
           </div>
 
-          <!-- Room 3: Super Deluxe Family Suite -->
-          <div class="room-card">
+          <!-- Room 3: Super Deluxe Family Suite (3rd photo) -->
+          <div class="room-card reveal-init delay-3">
             <div class="room-thumb-wrapper">
-              <img src="assets/images/attached-bathroom.png" alt="Super Deluxe Suite & Bathroom at Hotel Radhe Krishna Palace">
+              <img src="assets/images/super-deluxe-suite.png" alt="Super Deluxe Family Suite at Hotel Radhe Krishna Palace">
               <div class="room-price-badge">
                 <span class="room-price-val">₹1,799</span>
                 <span class="room-price-period">/ night</span>
@@ -455,7 +467,7 @@
         <div class="location-grid">
           <div>
             <!-- Dedicated Medical Care Card -->
-            <div class="medical-care-card">
+            <div class="medical-care-card reveal-init">
               <div class="medical-badge">
                 <i class="fa-solid fa-hand-holding-medical"></i> Special Medical Attendant Care
               </div>
@@ -474,7 +486,7 @@
             </div>
 
             <!-- Key Varanasi Landmarks Distances -->
-            <div class="landmark-dist-list">
+            <div class="landmark-dist-list reveal-init delay-1">
               <div class="landmark-dist-item">
                 <div class="landmark-info">
                   <div class="landmark-icon"><i class="fa-solid fa-hospital"></i></div>
@@ -570,16 +582,16 @@
         </div>
 
         <div class="gallery-filter-tabs">
-          <button type="button" class="filter-tab active" data-filter="all">All Photos (5)</button>
-          <button type="button" class="filter-tab" data-filter="rooms">Deluxe Rooms</button>
-          <button type="button" class="filter-tab" data-filter="facade">Exterior & Facade</button>
-          <button type="button" class="filter-tab" data-filter="reception">Reception & Corridors</button>
-          <button type="button" class="filter-tab" data-filter="bathroom">Bathrooms</button>
+          <button type="button" class="filter-tab active" data-filter="all">All Photos (8)</button>
+          <button type="button" class="filter-tab" data-filter="rooms">Rooms & Suites</button>
+          <button type="button" class="filter-tab" data-filter="facade">Exterior & Building</button>
+          <button type="button" class="filter-tab" data-filter="reception">Reception & Corridor</button>
+          <button type="button" class="filter-tab" data-filter="bathroom">Attached Bathrooms</button>
         </div>
 
         <div class="gallery-grid">
           <!-- Photo 1: Hotel Facade (Large feature) -->
-          <div class="gallery-item" data-category="facade">
+          <div class="gallery-item reveal-init" data-category="facade">
             <img src="assets/images/hotel-facade-exterior.png" alt="Hotel Radhe Krishna Palace Building Exterior Facade">
             <div class="gallery-item-overlay">
               <span class="gallery-badge">Exterior Facade</span>
@@ -588,18 +600,38 @@
             </div>
           </div>
 
-          <!-- Photo 2: Deluxe Bedroom -->
-          <div class="gallery-item" data-category="rooms">
-            <img src="assets/images/deluxe-bedroom.png" alt="Deluxe AC Bedroom at Hotel Radhe Krishna Palace">
+          <!-- Photo 2: Super Deluxe Suite (3rd Photo) -->
+          <div class="gallery-item reveal-init delay-1" data-category="rooms">
+            <img src="assets/images/super-deluxe-suite.png" alt="Super Deluxe Suite Room at Hotel Radhe Krishna Palace">
             <div class="gallery-item-overlay">
-              <span class="gallery-badge">Deluxe Room</span>
-              <h3 class="gallery-title">Pristine AC Deluxe Room</h3>
-              <p class="gallery-caption">King size comfortable bed, fresh white linens, air conditioner, and ambient wooden styling</p>
+              <span class="gallery-badge">Super Deluxe Suite</span>
+              <h3 class="gallery-title">Super Deluxe AC Suite</h3>
+              <p class="gallery-caption">Spacious air-conditioned master suite with king bed, wooden accents, and marble doorway</p>
             </div>
           </div>
 
-          <!-- Photo 3: Reception Counter -->
-          <div class="gallery-item" data-category="reception">
+          <!-- Photo 3: Deluxe AC Room (2nd Photo) -->
+          <div class="gallery-item reveal-init delay-2" data-category="rooms">
+            <img src="assets/images/deluxe-ac-room.jpg" alt="Deluxe AC Room at Hotel Radhe Krishna Palace">
+            <div class="gallery-item-overlay">
+              <span class="gallery-badge">Deluxe AC</span>
+              <h3 class="gallery-title">Deluxe AC Room</h3>
+              <p class="gallery-caption">Comfortable double bed, ceiling fan, air conditioning, and fresh crisp white bedding</p>
+            </div>
+          </div>
+
+          <!-- Photo 4: Standard Budget Room (1st Photo) -->
+          <div class="gallery-item reveal-init delay-3" data-category="rooms">
+            <img src="assets/images/standard-room.jpg" alt="Standard Budget Room at Hotel Radhe Krishna Palace">
+            <div class="gallery-item-overlay">
+              <span class="gallery-badge">Budget Room</span>
+              <h3 class="gallery-title">Standard Budget Room</h3>
+              <p class="gallery-caption">Economical comfortable double bed, seating chair, full dressing mirror, and attached bath</p>
+            </div>
+          </div>
+
+          <!-- Photo 5: Reception Desk -->
+          <div class="gallery-item reveal-init delay-1" data-category="reception">
             <img src="assets/images/reception-frontdesk.png" alt="Hotel Radhe Krishna Palace Front Desk Reception Counter">
             <div class="gallery-item-overlay">
               <span class="gallery-badge">Reception</span>
@@ -608,8 +640,8 @@
             </div>
           </div>
 
-          <!-- Photo 4: Hotel Corridor -->
-          <div class="gallery-item" data-category="reception">
+          <!-- Photo 6: Hotel Corridor -->
+          <div class="gallery-item reveal-init delay-2" data-category="reception">
             <img src="assets/images/hotel-corridor.png" alt="Hotel Radhe Krishna Palace Bright Polished Corridor">
             <div class="gallery-item-overlay">
               <span class="gallery-badge">Interior Corridor</span>
@@ -618,13 +650,23 @@
             </div>
           </div>
 
-          <!-- Photo 5: Modern Attached Bathroom -->
-          <div class="gallery-item" data-category="bathroom">
+          <!-- Photo 7: Modern Attached Bathroom -->
+          <div class="gallery-item reveal-init delay-3" data-category="bathroom">
             <img src="assets/images/attached-bathroom.png" alt="Modern Attached Bathroom at Hotel Radhe Krishna Palace">
             <div class="gallery-item-overlay">
               <span class="gallery-badge">Sanitary & Washroom</span>
               <h3 class="gallery-title">Attached Bathroom with Geyser</h3>
               <p class="gallery-caption">Dual-tone designer tiles, western commode, health faucet, stainless shelf, and 24/7 hot water geyser</p>
+            </div>
+          </div>
+
+          <!-- Photo 8: Deluxe Bedroom View 2 -->
+          <div class="gallery-item reveal-init delay-4" data-category="rooms">
+            <img src="assets/images/deluxe-bedroom.png" alt="Deluxe Bedroom Perspective at Hotel Radhe Krishna Palace">
+            <div class="gallery-item-overlay">
+              <span class="gallery-badge">Deluxe Suite Angle</span>
+              <h3 class="gallery-title">Pristine White Linens</h3>
+              <p class="gallery-caption">Quiet, hygienic, and sanitized room environment ideal for pilgrims and medical caregivers</p>
             </div>
           </div>
         </div>
@@ -645,73 +687,73 @@
         </div>
 
         <div class="amenities-grid">
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-snowflake"></i></div>
             <h4 class="amenity-title">Air Conditioned Rooms</h4>
             <p class="amenity-desc">Individual split air conditioning units in all deluxe rooms for year-round climate comfort.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-bolt"></i></div>
             <h4 class="amenity-title">100% Power Backup</h4>
             <p class="amenity-desc">Heavy-duty generator and inverter system ensuring uninterrupted lights, fans, and mobile charging.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-wifi"></i></div>
             <h4 class="amenity-title">Free High-Speed Wi-Fi</h4>
             <p class="amenity-desc">High-speed wireless broadband internet coverage across all floors and guest rooms.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-shower"></i></div>
             <h4 class="amenity-title">24x7 Hot Water Geyser</h4>
             <p class="amenity-desc">Instant water heaters installed in every attached bathroom for refreshing morning or evening baths.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-clock-rotate-left"></i></div>
             <h4 class="amenity-title">24-Hour Front Desk</h4>
             <p class="amenity-desc">Reception desk staffed 24/7 to welcome late-night arrivals, assist with queries, and luggage.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-spray-can-sparkles"></i></div>
             <h4 class="amenity-title">Daily Housekeeping</h4>
             <p class="amenity-desc">Meticulous cleaning, room sanitization, and freshly laundered crisp bedsheets and pillow covers.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-heart"></i></div>
             <h4 class="amenity-title">Couple Friendly</h4>
             <p class="amenity-desc">Welcoming atmosphere for couples with valid government photo ID proofs (Aadhaar/Passport/Voter ID).</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-utensils"></i></div>
             <h4 class="amenity-title">In-Room Food Delivery</h4>
             <p class="amenity-desc">Quick in-room tea, coffee, breakfast, and ties with delicious local pure-veg restaurants for easy meals.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-shield-halved"></i></div>
             <h4 class="amenity-title">CCTV Security</h4>
             <p class="amenity-desc">Comprehensive 24/7 CCTV surveillance across corridors, entrance, and public areas for complete safety.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-car"></i></div>
             <h4 class="amenity-title">Parking Assistance</h4>
             <p class="amenity-desc">Convenient parking space and vehicle parking assistance for guests traveling by car or taxi.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-om"></i></div>
             <h4 class="amenity-title">Kashi Darshan Help</h4>
             <p class="amenity-desc">Assistance with Ganga boat rides, Kashi Vishwanath Sugam Darshan guidance, and local auto/cab booking.</p>
           </div>
 
-          <div class="amenity-card">
+          <div class="amenity-card reveal-init">
             <div class="amenity-icon-box"><i class="fa-solid fa-suitcase-medical"></i></div>
             <h4 class="amenity-title">Doctor-on-Call</h4>
             <p class="amenity-desc">Immediate medical consultation and medicine delivery assistance for hospital-attending guests.</p>
@@ -752,7 +794,7 @@
 
         <div class="reviews-grid">
           <!-- Review 1 -->
-          <div class="review-card">
+          <div class="review-card reveal-init">
             <div class="stars-row" style="margin-bottom:1rem;">
               <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             </div>
@@ -769,7 +811,7 @@
           </div>
 
           <!-- Review 2 -->
-          <div class="review-card">
+          <div class="review-card reveal-init">
             <div class="stars-row" style="margin-bottom:1rem;">
               <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             </div>
@@ -786,7 +828,7 @@
           </div>
 
           <!-- Review 3 -->
-          <div class="review-card">
+          <div class="review-card reveal-init">
             <div class="stars-row" style="margin-bottom:1rem;">
               <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             </div>
