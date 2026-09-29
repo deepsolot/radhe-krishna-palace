@@ -4,16 +4,21 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Default or Saved Owner Contact Details
+  // Initialize Official Owner Contact Details
   const defaultContact = {
-    phone: '+919450215724',
-    phoneDisplay: '+91 94502 15724',
-    whatsapp: '919450215724',
+    phone: '+919044241613',
+    phoneDisplay: '+91 90442 41613',
+    phone2: '+919696619832',
+    phone2Display: '+91 96966 19832',
+    phone3: '+919336103236',
+    phone3Display: '+91 93361 03236',
+    whatsapp: '919044241613',
+    whatsapp2: '919696619832',
     name: 'Hotel Radhe Krishna Palace'
   };
 
   let currentContact = { ...defaultContact };
-  const savedContact = localStorage.getItem('radhe_palace_contact');
+  const savedContact = localStorage.getItem('radhe_palace_contact_v2');
   if (savedContact) {
     try {
       currentContact = { ...defaultContact, ...JSON.parse(savedContact) };
@@ -286,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Hotel Radhe Krishna Palace'
     };
 
-    localStorage.setItem('radhe_palace_contact', JSON.stringify(currentContact));
+    localStorage.setItem('radhe_palace_contact_v2', JSON.stringify(currentContact));
     updateDOMContacts();
     closeCustomizer();
     showToast('✅ Contact numbers updated! Try testing the WhatsApp or Call buttons now.');
