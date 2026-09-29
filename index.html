@@ -60,16 +60,43 @@
 <body>
 
   <!-- ==========================================================================
-       ROYAL OPENING PRELOADER & WELCOME REVEAL
+       ROYAL OPENING PRELOADER & WELCOME AUDIO (3-4s Reveal Experience)
        ========================================================================== -->
   <div class="royal-preloader" id="royalPreloader">
     <div class="preloader-emblem">
       <div class="preloader-ring"></div>
+      <div class="preloader-ring ring-outer"></div>
       <div class="preloader-monogram">RKP</div>
     </div>
     <div class="preloader-title">Hotel Radhe Krishna Palace</div>
     <div class="preloader-subtitle">Varanasi • Sacred Hospitality</div>
+
+    <!-- Live Audio Waveform Status -->
+    <div class="preloader-audio-status" id="preloaderAudioStatus">
+      <span class="audio-wave-bars">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+        <span class="bar bar-4"></span>
+      </span>
+      <span class="audio-text-note" id="audioTextNote">🎵 Welcome Chime Playing (3.6s)</span>
+    </div>
+
+    <!-- 3.2s Smooth Fill Progress Bar -->
+    <div class="preloader-progress-track">
+      <div class="preloader-progress-bar" id="preloaderProgressBar"></div>
+    </div>
+
+    <div class="preloader-tap-hint" id="preloaderTapHint">
+      <i class="fa-solid fa-volume-high"></i> Tap anywhere for sound
+    </div>
   </div>
+
+  <!-- Audio Element for 3.6s Harmonic Temple Chime -->
+  <audio id="royalWelcomeAudio" preload="auto">
+    <source src="assets/audio/welcome_chime.m4a" type="audio/mp4">
+    <source src="assets/audio/welcome_chime.wav" type="audio/wav">
+  </audio>
 
   <!-- ==========================================================================
        TOP ANNOUNCEMENT BAR (Guest Privilege & Direct Reservation Info)
@@ -79,6 +106,9 @@
       <span class="announcement-badge">Direct Deal</span>
       <span>✨ <strong>Direct Booking Privilege:</strong> Save 15% OFF + Guaranteed Clean Sanitized Rooms • 24/7 Front Desk & WhatsApp Booking: <a href="tel:+919696619832" class="js-phone-link js-phone-text" style="color:#FFF; text-decoration:underline;">+91 96966 19832</a> • <a href="tel:+919044241613" style="color:#FFF; text-decoration:underline;">+91 90442 41613</a></span>
       <div class="announcement-actions" style="margin-left:auto;">
+        <button type="button" id="btnReplayAudioTop" class="contact-pill-link sound-toggle-btn" title="Replay 3.5s Welcome Chime" style="cursor:pointer; background:rgba(212,175,55,0.18); border:1px solid rgba(212,175,55,0.45); color:#F9D976;">
+          <i class="fa-solid fa-volume-high"></i> <span class="sound-label">Welcome Chime 🎵</span>
+        </button>
         <a href="#medical-care" class="contact-pill-link"><i class="fa-solid fa-hospital"></i> 250m to MPMMCC Cancer Centre</a>
         <button type="button" id="btnOpenCustomizer" class="contact-pill-link" title="Front Desk Settings" style="cursor:pointer;"><i class="fa-solid fa-gear"></i> Number Setup</button>
       </div>
@@ -120,6 +150,11 @@
           <span class="live-pulse"></span>
           <span id="liveISTClock">18:30:00 IST</span>
         </div>
+
+        <!-- Sound Toggle / Replay Button -->
+        <button type="button" class="lang-toggle-btn sound-toggle-btn" id="soundToggleBtn" title="Play / Replay Royal Welcome Chime (3.6s)">
+          <i class="fa-solid fa-volume-high"></i> <span>Chime</span>
+        </button>
 
         <!-- Language Switcher -->
         <button type="button" class="lang-toggle-btn" id="langToggleBtn" title="Switch Language">

@@ -373,22 +373,161 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3800);
   }
 
-  // Royal Preloader Curtain Reveal
+  // ==========================================================================
+  // ROYAL 3-4s OPENING WELCOME AUDIO & CHIME ENGINE
+  // ==========================================================================
+  const audioElement = document.getElementById('royalWelcomeAudio');
+  const soundButtons = document.querySelectorAll('.sound-toggle-btn');
+  const preloaderAudioStatus = document.getElementById('preloaderAudioStatus');
+  const preloaderProgressBar = document.getElementById('preloaderProgressBar');
+  const preloaderTapHint = document.getElementById('preloaderTapHint');
+  let audioContext = null;
+  let audioPlayed = false;
+
+  // Web Audio API Synthesizer Fallback (Temple Bell with sacred harmonic decay)
+  function playSynthesizedBell() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audioContext) {
+        audioContext = new AudioCtx();
+      }
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+      const now = audioContext.currentTime;
+      // Frequencies for sacred resonant Indian chime (G#4, C#5, D#5, G#5, C#6)
+      const harmonics = [
+        { freq: 415.3, gain: 0.28, type: 'sine' },
+        { freq: 554.37, gain: 0.35, type: 'sine' },
+        { freq: 622.25, gain: 0.22, type: 'triangle' },
+        { freq: 830.61, gain: 0.20, type: 'sine' },
+        { freq: 1108.73, gain: 0.12, type: 'sine' }
+      ];
+
+      harmonics.forEach(h => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = h.type;
+        osc.frequency.setValueAtTime(h.freq, now);
+
+        // Smooth 3.5s natural chime envelope
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(h.gain, now + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.6);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start(now);
+        osc.stop(now + 3.65);
+      });
+    } catch (e) {
+      console.warn('Web Audio synthesis fallback error:', e);
+    }
+  }
+
+  function setAudioVisualPlaying(isPlaying) {
+    if (preloaderAudioStatus) {
+      if (isPlaying) {
+        preloaderAudioStatus.style.opacity = '1';
+        if (preloaderTapHint) preloaderTapHint.style.display = 'none';
+      }
+    }
+    soundButtons.forEach(btn => {
+      if (isPlaying) {
+        btn.classList.add('playing');
+      } else {
+        btn.classList.remove('playing');
+      }
+    });
+  }
+
+  function playRoyalWelcomeMusic(showToastNotice = false) {
+    let playPromise = null;
+    if (audioElement) {
+      audioElement.currentTime = 0;
+      audioElement.volume = 0.85;
+      playPromise = audioElement.play();
+    }
+
+    if (playPromise !== null && playPromise !== undefined) {
+      playPromise.then(() => {
+        audioPlayed = true;
+        setAudioVisualPlaying(true);
+        if (showToastNotice) {
+          showToast('🎵 Playing Royal Welcome Chime (3.6s)');
+        }
+        setTimeout(() => {
+          setAudioVisualPlaying(false);
+        }, 3600);
+      }).catch(err => {
+        // Autoplay policy prevented immediate playback
+        if (preloaderTapHint) {
+          preloaderTapHint.style.display = 'inline-flex';
+        }
+        // If triggered by a user click, use synthesized chime as fallback
+        if (showToastNotice) {
+          playSynthesizedBell();
+          showToast('🎵 Playing Royal Welcome Chime (3.6s)');
+          setAudioVisualPlaying(true);
+          setTimeout(() => setAudioVisualPlaying(false), 3600);
+        }
+      });
+    } else {
+      playSynthesizedBell();
+      setAudioVisualPlaying(true);
+      if (showToastNotice) {
+        showToast('🎵 Playing Royal Welcome Chime (3.6s)');
+      }
+      setTimeout(() => setAudioVisualPlaying(false), 3600);
+    }
+  }
+
+  // Bind sound toggle buttons in header and announcement bar
+  soundButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      playRoyalWelcomeMusic(true);
+    });
+  });
+
+  // Royal Preloader Curtain Reveal with 3-4s Opening Sequence
   const preloader = document.getElementById('royalPreloader');
   if (preloader) {
-    const hidePreloader = () => {
+    // Start progress bar animation smoothly
+    if (preloaderProgressBar) {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          preloaderProgressBar.style.width = '100%';
+        }, 80);
+      });
+    }
+
+    // Attempt to start 3-4s welcome chime
+    playRoyalWelcomeMusic(false);
+
+    // If user clicks anywhere on preloader or window during opening, ensure music triggers
+    const onPreloaderInteraction = () => {
+      if (!audioPlayed) {
+        playRoyalWelcomeMusic(false);
+      }
+    };
+    preloader.addEventListener('click', onPreloaderInteraction);
+    window.addEventListener('click', onPreloaderInteraction, { once: true });
+    window.addEventListener('touchstart', onPreloaderInteraction, { once: true });
+
+    const finishPreloader = () => {
+      preloader.classList.add('loaded');
       setTimeout(() => {
-        preloader.classList.add('loaded');
-      }, 750);
+        preloader.style.display = 'none';
+      }, 900);
     };
 
-    if (document.readyState === 'complete') {
-      hidePreloader();
-    } else {
-      window.addEventListener('load', hidePreloader);
-      // Fallback
-      setTimeout(hidePreloader, 1500);
-    }
+    // Royal opening animation duration: 3.4 seconds (3-4 sec as requested)
+    const OPENING_ANIMATION_MS = 3400;
+    setTimeout(finishPreloader, OPENING_ANIMATION_MS);
   }
 
   // Scroll Reveal Animations via IntersectionObserver
