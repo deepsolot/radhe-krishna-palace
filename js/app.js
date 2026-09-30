@@ -521,9 +521,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const finishPreloader = () => {
       preloader.classList.add('loaded');
 
-      // Trigger 3-4s Hyper-Realistic Opening Butterfly Flight as Gates Open
-      if (typeof window.triggerOpeningButterflies === 'function') {
-        window.triggerOpeningButterflies();
+      // Trigger 4-Second Hyper-Realistic Flower & Butterfly Shower as Gates Open
+      if (typeof window.triggerFourSecondShower === 'function') {
+        window.triggerFourSecondShower();
       }
 
       // Royal Gateman Welcome Greeting Toast
@@ -578,9 +578,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const isMobile = window.innerWidth < 768;
-    const maxParticles = isMobile ? 22 : 36;
-    const particles = [];
-    const openingButterflies = []; // 3-4s Opening Ceremony Butterflies
+    let showerParticles = [];
+    let animFrameId = null;
+    let showerStartTime = 0;
+    const SHOWER_DURATION_MS = 4000; // Strictly 4 seconds
+    let isShowerRunning = false;
     let lastScrollY = window.scrollY;
     let scrollVelocity = 0;
     let scrollTimeout = null;
@@ -753,142 +755,89 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ========================================================================
-    // 3-4 SECOND OPENING CEREMONY BUTTERFLIES (Emerge as Gates Part Open)
+    // 4-SECOND FLOWER & HYPER-REALISTIC BUTTERFLY SHOWER CEREMONY ENGINE
     // ========================================================================
-    class OpeningButterfly {
-      constructor(index, total) {
-        this.size = (isMobile ? 26 : 38) + Math.random() * 8;
-        this.x = width * 0.5 + (Math.random() - 0.5) * 80;
-        this.y = height * 0.5 + (Math.random() - 0.5) * 60;
-        this.angle = (index / total) * Math.PI * 2;
-        this.speed = 3.6 + Math.random() * 2.2;
-        this.wingFlap = Math.random() * Math.PI;
-        this.wingSpeed = 0.32 + Math.random() * 0.15;
-        this.opacity = 1;
-        this.life = 0;
-        this.maxLife = 210; // ~3.5 seconds at 60 FPS
-        this.curveFactor = (Math.random() - 0.5) * 0.04;
+    class ShowerParticle {
+      constructor(type, index, total) {
+        this.type = type; // 0 = Marigold, 1 = Lotus/Rose, 2 = Butterfly, 3 = Sparkle
+        this.reset(index, total);
       }
 
-      update() {
-        this.life++;
-        this.wingFlap += this.wingSpeed;
-        this.angle += this.curveFactor;
-
-        this.x += Math.cos(this.angle) * this.speed;
-        this.y += Math.sin(this.angle) * this.speed * 0.7 - 0.9; // gentle natural lift
-
-        // Smooth fade out at the end of 3.5 seconds
-        if (this.life > this.maxLife - 35) {
-          this.opacity = Math.max(0, (this.maxLife - this.life) / 35);
+      reset(index, total) {
+        if (this.type === 2) {
+          // 🦋 Hyper-Realistic Golden Butterfly
+          this.size = (isMobile ? 24 : 36) + Math.random() * 8;
+          // Emerge around center-viewport spreading across the open palace gates
+          this.x = width * 0.5 + (Math.random() - 0.5) * (width * 0.6);
+          this.y = height * 0.55 + (Math.random() - 0.5) * (height * 0.35);
+          this.angle = ((index || 0) / (total || 8)) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+          this.speed = (isMobile ? 2.8 : 3.8) + Math.random() * 2.2;
+          this.wingFlap = Math.random() * Math.PI * 2;
+          this.wingSpeed = 0.32 + Math.random() * 0.12;
+          this.curve = (Math.random() - 0.5) * 0.035;
+          this.opacity = 0.95;
+        } else if (this.type === 0 || this.type === 1) {
+          // 🌸 Sacred Flower Petal (Marigold or Lotus/Rose)
+          this.size = (this.type === 0 ? 12 : 13) + Math.random() * 8;
+          this.x = Math.random() * width;
+          this.y = Math.random() * (height * 0.4) - height * 0.25;
+          this.speedY = 1.8 + Math.random() * 2.2;
+          this.speedX = (Math.random() - 0.5) * 1.5;
+          this.angle = Math.random() * Math.PI * 2;
+          this.angularSpeed = (Math.random() - 0.5) * 0.05;
+          this.swing = Math.random() * Math.PI * 2;
+          this.swingSpeed = 0.03 + Math.random() * 0.03;
+          this.flip = Math.random() * Math.PI;
+          this.flipSpeed = 0.03 + Math.random() * 0.03;
+          this.opacity = 0.92;
+        } else {
+          // ✨ Sacred Golden Blessing Dust
+          this.size = 2.5 + Math.random() * 3.5;
+          this.x = Math.random() * width;
+          this.y = Math.random() * (height * 0.6);
+          this.speedY = 1.0 + Math.random() * 1.4;
+          this.speedX = (Math.random() - 0.5) * 0.8;
+          this.swing = Math.random() * Math.PI * 2;
+          this.opacity = 0.85;
         }
       }
 
-      draw() {
-        if (this.opacity <= 0.01) return;
+      update() {
+        if (this.type === 2) {
+          // Butterfly 3D flight physics
+          this.wingFlap += this.wingSpeed;
+          this.angle += this.curve;
+          this.x += Math.cos(this.angle) * this.speed + scrollVelocity * 0.3;
+          this.y += Math.sin(this.angle) * this.speed * 0.7 - 1.2; // graceful upward lift
+        } else if (this.type === 0 || this.type === 1) {
+          // Petal aerodynamic falling physics
+          this.angle += this.angularSpeed;
+          this.swing += this.swingSpeed;
+          this.flip += this.flipSpeed;
+          this.y += this.speedY;
+          this.x += this.speedX + Math.sin(this.swing) * 1.6 + scrollVelocity * 0.25;
+        } else {
+          // Stardust gentle drift
+          this.y += this.speedY;
+          this.x += this.speedX;
+          this.swing += 0.05;
+        }
+      }
+
+      draw(fadeFactor) {
+        const finalAlpha = this.opacity * fadeFactor;
+        if (finalAlpha <= 0.01) return;
+
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle + Math.PI / 2);
-        drawRealisticButterfly(ctx, this.size, this.wingFlap, this.opacity);
-        ctx.restore();
-      }
-    }
-
-    // Trigger function called when the palace gates part open
-    window.triggerOpeningButterflies = function() {
-      if (!effectsActive) return;
-      const count = isMobile ? 4 : 7;
-      for (let i = 0; i < count; i++) {
-        openingButterflies.push(new OpeningButterfly(i, count));
-      }
-    };
-
-    // ========================================================================
-    // AMBIENT SACRED PETALS & BUTTERFLIES PARTICLE CLASS
-    // ========================================================================
-    class RoyalParticle {
-      constructor(isWelcomeShower = false) {
-        this.reset(isWelcomeShower);
-      }
-
-      reset(isWelcomeShower = false) {
-        this.x = Math.random() * width;
-        this.y = isWelcomeShower ? Math.random() * height * 0.5 - height * 0.4 : -30;
-        
-        // 0 = Marigold Petal, 1 = Lotus/Rose Petal, 2 = Golden Butterfly, 3 = Golden Sparkle
-        const rand = Math.random();
-        if (rand < 0.45) {
-          this.type = 0; // Marigold
-          this.size = 11 + Math.random() * 8;
-          this.speedY = 1.0 + Math.random() * 1.8;
-          this.speedX = (Math.random() - 0.5) * 1.2;
-        } else if (rand < 0.80) {
-          this.type = 1; // Lotus / Rose
-          this.size = 12 + Math.random() * 9;
-          this.speedY = 1.1 + Math.random() * 1.8;
-          this.speedX = (Math.random() - 0.5) * 1.2;
-        } else if (rand < 0.94) {
-          this.type = 2; // Golden Butterfly
-          this.size = 20 + Math.random() * 10;
-          this.speedY = (Math.random() - 0.4) * 1.4;
-          this.speedX = (Math.random() - 0.5) * 2.0;
-          this.flightTime = Math.random() * 100;
-        } else {
-          this.type = 3; // Golden Stardust
-          this.size = 3 + Math.random() * 4;
-          this.speedY = 0.8 + Math.random() * 1.2;
-          this.speedX = (Math.random() - 0.5) * 0.8;
-        }
-
-        this.angle = Math.random() * Math.PI * 2;
-        this.angularSpeed = (Math.random() - 0.5) * 0.04;
-        this.swing = Math.random() * Math.PI * 2;
-        this.swingSpeed = 0.02 + Math.random() * 0.03;
-        this.wingFlap = Math.random() * Math.PI * 2;
-        this.wingSpeed = 0.28 + Math.random() * 0.15;
-        this.opacity = 0.75 + Math.random() * 0.25;
-        this.flip = Math.random() * Math.PI;
-        this.flipSpeed = 0.02 + Math.random() * 0.03;
-      }
-
-      update() {
-        this.angle += this.angularSpeed;
-        this.swing += this.swingSpeed;
-        this.flip += this.flipSpeed;
-        this.wingFlap += this.wingSpeed;
-
-        const effectiveBreeze = scrollVelocity * 0.5;
 
         if (this.type === 2) {
-          // Dynamic Butterfly Flight Physics
-          this.flightTime += 0.025;
-          this.x += Math.sin(this.flightTime * 2.2) * 2.6 + effectiveBreeze * 0.4;
-          this.y += Math.cos(this.flightTime * 1.6) * 1.6 + this.speedY;
-          this.angle = Math.sin(this.flightTime * 2.2) * 0.25;
-
-          if (this.y > height + 60 || this.y < -80 || this.x < -80 || this.x > width + 80) {
-            this.reset(false);
-          }
-          return;
-        }
-
-        // Falling Petals Physics
-        this.y += this.speedY + Math.abs(scrollVelocity * 0.2);
-        this.x += this.speedX + Math.sin(this.swing) * 1.2 + effectiveBreeze * 0.3;
-
-        if (this.y > height + 40 || this.x < -60 || this.x > width + 60) {
-          this.reset(false);
-          this.y = -25;
-        }
-      }
-
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-
-        if (this.type === 0) {
-          // 🌸 MARIGOLD (GENDA) PETAL
+          // 🦋 Hyper-Realistic Golden Butterfly
+          ctx.rotate(this.angle + Math.PI / 2);
+          drawRealisticButterfly(ctx, this.size, this.wingFlap, finalAlpha);
+        } else if (this.type === 0) {
+          // 🌸 Marigold (Genda) Petal
+          ctx.rotate(this.angle);
           const scaleX = Math.cos(this.flip);
           ctx.scale(scaleX, 1);
           ctx.beginPath();
@@ -901,13 +850,13 @@ document.addEventListener('DOMContentLoaded', () => {
           grad.addColorStop(0.5, '#F59E0B');
           grad.addColorStop(1, '#D97706');
           ctx.fillStyle = grad;
-          ctx.globalAlpha = this.opacity;
+          ctx.globalAlpha = finalAlpha;
           ctx.shadowColor = 'rgba(245, 158, 11, 0.4)';
           ctx.shadowBlur = 6;
           ctx.fill();
-
         } else if (this.type === 1) {
-          // 🪷 LOTUS / ROSE (KAMAL) PETAL
+          // 🪷 Lotus / Rose (Kamal) Petal
+          ctx.rotate(this.angle);
           const scaleX = Math.sin(this.flip);
           ctx.scale(scaleX, 1);
           ctx.beginPath();
@@ -920,23 +869,18 @@ document.addEventListener('DOMContentLoaded', () => {
           grad.addColorStop(0.6, '#F43F5E');
           grad.addColorStop(1, '#BE123C');
           ctx.fillStyle = grad;
-          ctx.globalAlpha = this.opacity * 0.92;
+          ctx.globalAlpha = finalAlpha * 0.92;
           ctx.shadowColor = 'rgba(244, 63, 94, 0.35)';
           ctx.shadowBlur = 5;
           ctx.fill();
-
-        } else if (this.type === 2) {
-          // 🦋 HYPER-REALISTIC GOLDEN BUTTERFLY
-          drawRealisticButterfly(ctx, this.size, this.wingFlap, this.opacity);
-
         } else if (this.type === 3) {
-          // ✨ SACRED GOLDEN SPARKLE DUST
+          // ✨ Sacred Golden Sparkle
           ctx.beginPath();
           ctx.arc(0, 0, this.size, 0, Math.PI * 2);
           ctx.fillStyle = '#FEF08A';
           ctx.shadowColor = 'rgba(253, 224, 71, 0.9)';
-          ctx.shadowBlur = 12;
-          ctx.globalAlpha = (Math.sin(this.swing * 2) * 0.4 + 0.6) * this.opacity;
+          ctx.shadowBlur = 10;
+          ctx.globalAlpha = (Math.sin(this.swing * 2) * 0.3 + 0.7) * finalAlpha;
           ctx.fill();
         }
 
@@ -944,98 +888,95 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Initialize particle pool with welcome shower
-    for (let i = 0; i < maxParticles; i++) {
-      particles.push(new RoyalParticle(true));
-    }
+    // Main 4-Second Animation Render Loop
+    function renderShowerLoop(now) {
+      if (!isShowerRunning) return;
+      const elapsed = now - showerStartTime;
 
-    // Main animation loop (optimized 60FPS)
-    let animFrameId = null;
-    function renderEffects() {
-      if (!effectsActive) return;
+      // When 4.0 seconds (4000ms) is reached, STOP completely
+      if (elapsed >= SHOWER_DURATION_MS) {
+        isShowerRunning = false;
+        ctx.clearRect(0, 0, width, height);
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+        }
+        if (effectsStatusText) {
+          effectsStatusText.textContent = '🌸 Flowers & Butterflies (4s)';
+        }
+        return;
+      }
+
+      // Smooth fade-out during the final 1.0 second (3.0s to 4.0s)
+      let fadeFactor = 1.0;
+      if (elapsed > 3000) {
+        fadeFactor = Math.max(0, (SHOWER_DURATION_MS - elapsed) / 1000);
+      }
 
       ctx.clearRect(0, 0, width, height);
 
-      // Render regular particles
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
+      for (let i = 0; i < showerParticles.length; i++) {
+        showerParticles[i].update();
+        showerParticles[i].draw(fadeFactor);
       }
 
-      // Render 3-4s Opening Ceremony Butterflies
-      for (let j = openingButterflies.length - 1; j >= 0; j--) {
-        openingButterflies[j].update();
-        openingButterflies[j].draw();
-        if (openingButterflies[j].life >= openingButterflies[j].maxLife) {
-          openingButterflies.splice(j, 1);
-        }
-      }
-
-      animFrameId = requestAnimationFrame(renderEffects);
+      animFrameId = requestAnimationFrame(renderShowerLoop);
     }
 
-    // Start loop
-    if (effectsActive) {
-      renderEffects();
-    }
-
-    // Pause animation when tab is inactive to preserve battery
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
+    // Trigger function: starts flowers and butterflies for exactly 4 seconds
+    window.triggerFourSecondShower = function(isManualClick = false) {
+      // Cancel any ongoing frame
+      if (animFrameId) {
         cancelAnimationFrame(animFrameId);
-      } else if (effectsActive) {
-        renderEffects();
+        animFrameId = null;
       }
-    });
 
-    // Interactive Mouse / Touch Stardust Spawn
-    let lastSparkleTime = 0;
-    const spawnSparkleAt = (clientX, clientY) => {
-      if (!effectsActive) return;
-      const now = performance.now();
-      if (now - lastSparkleTime < 50) return;
-      lastSparkleTime = now;
+      showerParticles = [];
 
-      const p = particles[Math.floor(Math.random() * particles.length)];
-      if (p && p.type !== 2) {
-        p.x = clientX + (Math.random() - 0.5) * 20;
-        p.y = clientY + (Math.random() - 0.5) * 20;
-        p.type = 3;
-        p.speedY = 0.5 + Math.random();
-        p.speedX = (Math.random() - 0.5) * 1.5;
-        p.size = 3.5 + Math.random() * 3;
-        p.opacity = 1;
+      // 1. Butterflies: 7-9 realistic butterflies
+      const butterflyCount = isMobile ? 5 : 8;
+      for (let b = 0; b < butterflyCount; b++) {
+        showerParticles.push(new ShowerParticle(2, b, butterflyCount));
       }
+
+      // 2. Flowers: 28 sacred marigold & lotus petals
+      const petalCount = isMobile ? 18 : 28;
+      for (let p = 0; p < petalCount; p++) {
+        const type = Math.random() < 0.5 ? 0 : 1;
+        showerParticles.push(new ShowerParticle(type, p, petalCount));
+      }
+
+      // 3. Stardust: 12 golden sparkles
+      const sparkleCount = isMobile ? 8 : 12;
+      for (let s = 0; s < sparkleCount; s++) {
+        showerParticles.push(new ShowerParticle(3, s, sparkleCount));
+      }
+
+      showerStartTime = performance.now();
+      isShowerRunning = true;
+
+      if (effectsStatusText) {
+        effectsStatusText.textContent = '🌸 Shower Active (4s)';
+      }
+
+      if (isManualClick) {
+        showToast('🌸 4-Second Welcome Flower & Butterfly Shower Active!');
+      }
+
+      animFrameId = requestAnimationFrame(renderShowerLoop);
     };
 
-    window.addEventListener('mousemove', (e) => spawnSparkleAt(e.clientX, e.clientY), { passive: true });
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches[0]) {
-        spawnSparkleAt(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
+    // Also support backward compatibility alias
+    window.triggerOpeningButterflies = function() {
+      window.triggerFourSecondShower(false);
+    };
 
-    // Effects Toggle Button Handler
+    // Toggle / Replay Button Handler
     if (toggleEffectsBtn) {
       toggleEffectsBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        effectsActive = !effectsActive;
-        localStorage.setItem('radhe_effects_enabled', effectsActive ? 'true' : 'false');
-
-        if (effectsActive) {
-          canvas.classList.remove('effects-disabled');
-          toggleEffectsBtn.classList.remove('effects-off');
-          if (effectsStatusText) effectsStatusText.textContent = '🌸 Flowers & Butterflies';
-          showToast('🌸 Sacred flowers & golden butterflies enabled!');
-          renderEffects();
-        } else {
-          canvas.classList.add('effects-disabled');
-          toggleEffectsBtn.classList.add('effects-off');
-          if (effectsStatusText) effectsStatusText.textContent = 'Effects: Off';
-          showToast('Effects paused');
-          ctx.clearRect(0, 0, width, height);
-          cancelAnimationFrame(animFrameId);
-        }
+        e.stopPropagation();
+        window.triggerFourSecondShower(true);
       });
     }
   }
