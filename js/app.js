@@ -304,18 +304,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const translations = {
     en: {
       bookDirect: 'Book Direct & Save 15%',
-      heroBadge: 'Sunderpur, Lanka, Varanasi • Near MPMMCC Cancer Centre & BHU',
+      heroBadge: 'Sunderpur, Lanka, Varanasi • Only 150m from MPMMCC Cancer Centre & BHU',
       heroTitle: 'Hotel Radhe Krishna Palace',
-      heroSub: 'Experience tranquil hospitality, pristine clean AC rooms, and authentic Varanasi warmth. Located just 2 minutes from MPMMCC Cancer Hospital and minutes from Assi Ghat & Kashi Vishwanath.',
+      heroSub: 'Experience tranquil hospitality, pristine clean AC rooms, and authentic Varanasi warmth. Located just 150 meters (1.5 mins walk) from MPMMCC Cancer Hospital and minutes from Assi Ghat & Kashi Vishwanath.',
       roomsHeading: 'Comfortable & Budget-Friendly Accommodations',
       directSave: 'Direct Booking Benefit',
       otaCut: 'Zero Middleman Commission'
     },
     hi: {
       bookDirect: 'सीधे बुक करें और 15% छूट पाएं',
-      heroBadge: 'सुंदरपुर, लंका, वाराणसी • कैंसर अस्पताल (MPMMCC) और BHU के पास',
+      heroBadge: 'सुंदरपुर, लंका, वाराणसी • कैंसर अस्पताल (MPMMCC) से मात्र 150 मीटर',
       heroTitle: 'होटल राधे कृष्णा पैलेस',
-      heroSub: 'वाराणसी में शांत, स्वच्छ एसी कमरे और प्रामाणिक आतिथ्य का आनंद लें। महामना कैंसर अस्पताल से मात्र 2 मिनट और अस्सी घाट व काशी विश्वनाथ मंदिर से कुछ ही दूरी पर।',
+      heroSub: 'वाराणसी में शांत, स्वच्छ एसी कमरे और प्रामाणिक आतिथ्य का आनंद लें। महामना कैंसर अस्पताल से मात्र 150 मीटर (1.5 मिनट की दूरी) और अस्सी घाट व काशी विश्वनाथ मंदिर से कुछ ही दूरी पर।',
       roomsHeading: 'आरामदायक एवं बजट-अनुकूल कमरे',
       directSave: 'डायरेक्ट बुकिंग लाभ',
       otaCut: 'बिचौलियों और कमीशन से 100% मुक्ति'
