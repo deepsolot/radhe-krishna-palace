@@ -520,9 +520,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const finishPreloader = () => {
       preloader.classList.add('loaded');
+
+      // Trigger 3-4s Hyper-Realistic Opening Butterfly Flight as Gates Open
+      if (typeof window.triggerOpeningButterflies === 'function') {
+        window.triggerOpeningButterflies();
+      }
+
+      // Royal Gateman Welcome Greeting Toast
+      setTimeout(() => {
+        showToast("🙏 अतिथि देवो भव • The Palace Gates Are Open! Welcome to Hotel Radhe Krishna Palace");
+      }, 700);
+
       setTimeout(() => {
         preloader.style.display = 'none';
-      }, 900);
+      }, 1500);
     };
 
     // Royal opening animation duration: 3.4 seconds (3-4 sec as requested)
@@ -548,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // SACRED WELCOME FLOWER PETALS & GOLDEN BUTTERFLIES PARTICLE ENGINE
+  // HYPER-REALISTIC BUTTERFLIES & SACRED FLOWER PETALS ENGINE (GATEMAN WELCOME)
   // ==========================================================================
   const canvas = document.getElementById('royalEffectsCanvas');
   const toggleEffectsBtn = document.getElementById('btnToggleEffects');
@@ -567,8 +578,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const isMobile = window.innerWidth < 768;
-    const maxParticles = isMobile ? 22 : 38;
+    const maxParticles = isMobile ? 22 : 36;
     const particles = [];
+    const openingButterflies = []; // 3-4s Opening Ceremony Butterflies
     let lastScrollY = window.scrollY;
     let scrollVelocity = 0;
     let scrollTimeout = null;
@@ -592,7 +604,208 @@ document.addEventListener('DOMContentLoaded', () => {
       height = canvas.height = window.innerHeight;
     });
 
-    // Particle Factory
+    // ========================================================================
+    // HYPER-REALISTIC BUTTERFLY DRAWING ENGINE (Anatomical Wings & Venation)
+    // ========================================================================
+    function drawRealisticButterfly(ctx, size, wingFlap, opacity) {
+      const flapCos = Math.cos(wingFlap);
+      const wingScale = Math.abs(flapCos) * 0.88 + 0.12;
+      const isVentral = flapCos < 0; // True when showing underside during flap
+
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      ctx.shadowColor = 'rgba(212, 175, 55, 0.7)';
+      ctx.shadowBlur = 10;
+
+      // Draw Left Wing (mirrored)
+      drawSingleWingSide(ctx, size, -wingScale, isVentral);
+      // Draw Right Wing
+      drawSingleWingSide(ctx, size, wingScale, isVentral);
+
+      // Segmented Body & Antennae
+      ctx.shadowBlur = 0;
+      // Abdomen
+      ctx.beginPath();
+      ctx.ellipse(0, size * 0.18, size * 0.08, size * 0.36, 0, 0, Math.PI * 2);
+      ctx.fillStyle = '#26180C';
+      ctx.fill();
+
+      // Thorax
+      ctx.beginPath();
+      ctx.ellipse(0, -size * 0.1, size * 0.1, size * 0.18, 0, 0, Math.PI * 2);
+      ctx.fillStyle = '#422814';
+      ctx.fill();
+
+      // Head
+      ctx.beginPath();
+      ctx.arc(0, -size * 0.32, size * 0.08, 0, Math.PI * 2);
+      ctx.fillStyle = '#1F1207';
+      ctx.fill();
+
+      // Antennae with golden droplet tips
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = '#D97706';
+      // Left antenna
+      ctx.beginPath();
+      ctx.moveTo(0, -size * 0.34);
+      ctx.quadraticCurveTo(-size * 0.25, -size * 0.7, -size * 0.42, -size * 0.86);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(-size * 0.42, -size * 0.86, 1.8, 0, Math.PI * 2);
+      ctx.fillStyle = '#FDE047';
+      ctx.fill();
+
+      // Right antenna
+      ctx.beginPath();
+      ctx.moveTo(0, -size * 0.34);
+      ctx.quadraticCurveTo(size * 0.25, -size * 0.7, size * 0.42, -size * 0.86);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(size * 0.42, -size * 0.86, 1.8, 0, Math.PI * 2);
+      ctx.fillStyle = '#FDE047';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawSingleWingSide(ctx, size, scaleX, isVentral) {
+      ctx.save();
+      ctx.scale(scaleX, 1);
+
+      // 1. HINDWING (Layered beneath forewing with Swallowtail extension)
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(size * 0.6, size * 0.2, size * 0.92, size * 0.72, size * 0.48, size * 1.08);
+      // Swallowtail Tail Extension
+      ctx.quadraticCurveTo(size * 0.42, size * 1.35, size * 0.26, size * 1.15);
+      ctx.bezierCurveTo(size * 0.12, size * 0.95, 0, size * 0.6, 0, 0);
+      ctx.closePath();
+
+      const hindGrad = ctx.createRadialGradient(size * 0.3, size * 0.5, 2, size * 0.4, size * 0.5, size * 1.1);
+      if (isVentral) {
+        hindGrad.addColorStop(0, '#FEF9C3');
+        hindGrad.addColorStop(0.5, '#FDE047');
+        hindGrad.addColorStop(1, '#854D0E');
+      } else {
+        hindGrad.addColorStop(0, '#FFFBEB');
+        hindGrad.addColorStop(0.35, '#F59E0B');
+        hindGrad.addColorStop(0.75, '#D97706');
+        hindGrad.addColorStop(1, '#451A03');
+      }
+      ctx.fillStyle = hindGrad;
+      ctx.fill();
+
+      ctx.lineWidth = 2.0;
+      ctx.strokeStyle = '#271708';
+      ctx.stroke();
+
+      // 2. FOREWING (Large, elegant upper wing)
+      ctx.beginPath();
+      ctx.moveTo(0, -size * 0.1);
+      ctx.bezierCurveTo(size * 0.35, -size * 1.15, size * 1.25, -size * 1.25, size * 1.35, -size * 0.35);
+      ctx.bezierCurveTo(size * 1.15, size * 0.25, size * 0.6, size * 0.35, 0, 0);
+      ctx.closePath();
+
+      const foreGrad = ctx.createRadialGradient(size * 0.4, -size * 0.4, 2, size * 0.6, -size * 0.3, size * 1.3);
+      if (isVentral) {
+        foreGrad.addColorStop(0, '#FFFBEB');
+        foreGrad.addColorStop(0.5, '#FDE047');
+        foreGrad.addColorStop(0.85, '#B45309');
+        foreGrad.addColorStop(1, '#1C1917');
+      } else {
+        foreGrad.addColorStop(0, '#FEF08A');
+        foreGrad.addColorStop(0.35, '#F59E0B');
+        foreGrad.addColorStop(0.75, '#C2410C');
+        foreGrad.addColorStop(1, '#1C1917');
+      }
+      ctx.fillStyle = foreGrad;
+      ctx.fill();
+
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = '#1C1917';
+      ctx.stroke();
+
+      // Delicate Wing Venation lines
+      ctx.beginPath();
+      ctx.moveTo(0, -size * 0.1);
+      ctx.quadraticCurveTo(size * 0.4, -size * 0.5, size * 1.1, -size * 0.85);
+      ctx.moveTo(0, -size * 0.1);
+      ctx.quadraticCurveTo(size * 0.5, -size * 0.3, size * 1.25, -size * 0.35);
+      ctx.moveTo(0, -size * 0.1);
+      ctx.quadraticCurveTo(size * 0.4, 0, size * 0.95, size * 0.15);
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(size * 0.3, size * 0.4, size * 0.35, size * 1.05);
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = 'rgba(78, 42, 10, 0.45)';
+      ctx.stroke();
+
+      // Tiny marginal ivory/gold pearl dots along outer edge
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      const spotRadius = 1.1;
+      ctx.beginPath();
+      ctx.arc(size * 1.26, -size * 0.3, spotRadius, 0, Math.PI * 2);
+      ctx.arc(size * 1.16, -size * 0.05, spotRadius, 0, Math.PI * 2);
+      ctx.arc(size * 1.02, size * 0.15, spotRadius, 0, Math.PI * 2);
+      ctx.arc(size * 0.42, size * 1.05, spotRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // ========================================================================
+    // 3-4 SECOND OPENING CEREMONY BUTTERFLIES (Emerge as Gates Part Open)
+    // ========================================================================
+    class OpeningButterfly {
+      constructor(index, total) {
+        this.size = (isMobile ? 26 : 38) + Math.random() * 8;
+        this.x = width * 0.5 + (Math.random() - 0.5) * 80;
+        this.y = height * 0.5 + (Math.random() - 0.5) * 60;
+        this.angle = (index / total) * Math.PI * 2;
+        this.speed = 3.6 + Math.random() * 2.2;
+        this.wingFlap = Math.random() * Math.PI;
+        this.wingSpeed = 0.32 + Math.random() * 0.15;
+        this.opacity = 1;
+        this.life = 0;
+        this.maxLife = 210; // ~3.5 seconds at 60 FPS
+        this.curveFactor = (Math.random() - 0.5) * 0.04;
+      }
+
+      update() {
+        this.life++;
+        this.wingFlap += this.wingSpeed;
+        this.angle += this.curveFactor;
+
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed * 0.7 - 0.9; // gentle natural lift
+
+        // Smooth fade out at the end of 3.5 seconds
+        if (this.life > this.maxLife - 35) {
+          this.opacity = Math.max(0, (this.maxLife - this.life) / 35);
+        }
+      }
+
+      draw() {
+        if (this.opacity <= 0.01) return;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle + Math.PI / 2);
+        drawRealisticButterfly(ctx, this.size, this.wingFlap, this.opacity);
+        ctx.restore();
+      }
+    }
+
+    // Trigger function called when the palace gates part open
+    window.triggerOpeningButterflies = function() {
+      if (!effectsActive) return;
+      const count = isMobile ? 4 : 7;
+      for (let i = 0; i < count; i++) {
+        openingButterflies.push(new OpeningButterfly(i, count));
+      }
+    };
+
+    // ========================================================================
+    // AMBIENT SACRED PETALS & BUTTERFLIES PARTICLE CLASS
+    // ========================================================================
     class RoyalParticle {
       constructor(isWelcomeShower = false) {
         this.reset(isWelcomeShower);
@@ -602,30 +815,37 @@ document.addEventListener('DOMContentLoaded', () => {
         this.x = Math.random() * width;
         this.y = isWelcomeShower ? Math.random() * height * 0.5 - height * 0.4 : -30;
         
-        // Types: 0 = Marigold Petal, 1 = Lotus/Rose Petal, 2 = Golden Butterfly, 3 = Golden Sparkle
+        // 0 = Marigold Petal, 1 = Lotus/Rose Petal, 2 = Golden Butterfly, 3 = Golden Sparkle
         const rand = Math.random();
         if (rand < 0.45) {
           this.type = 0; // Marigold
           this.size = 11 + Math.random() * 8;
+          this.speedY = 1.0 + Math.random() * 1.8;
+          this.speedX = (Math.random() - 0.5) * 1.2;
         } else if (rand < 0.80) {
           this.type = 1; // Lotus / Rose
           this.size = 12 + Math.random() * 9;
+          this.speedY = 1.1 + Math.random() * 1.8;
+          this.speedX = (Math.random() - 0.5) * 1.2;
         } else if (rand < 0.94) {
           this.type = 2; // Golden Butterfly
-          this.size = 16 + Math.random() * 8;
+          this.size = 20 + Math.random() * 10;
+          this.speedY = (Math.random() - 0.4) * 1.4;
+          this.speedX = (Math.random() - 0.5) * 2.0;
+          this.flightTime = Math.random() * 100;
         } else {
           this.type = 3; // Golden Stardust
           this.size = 3 + Math.random() * 4;
+          this.speedY = 0.8 + Math.random() * 1.2;
+          this.speedX = (Math.random() - 0.5) * 0.8;
         }
 
-        this.speedY = 1.0 + Math.random() * 1.8;
-        this.speedX = (Math.random() - 0.5) * 1.2;
         this.angle = Math.random() * Math.PI * 2;
         this.angularSpeed = (Math.random() - 0.5) * 0.04;
         this.swing = Math.random() * Math.PI * 2;
         this.swingSpeed = 0.02 + Math.random() * 0.03;
         this.wingFlap = Math.random() * Math.PI * 2;
-        this.wingSpeed = 0.25 + Math.random() * 0.15;
+        this.wingSpeed = 0.28 + Math.random() * 0.15;
         this.opacity = 0.75 + Math.random() * 0.25;
         this.flip = Math.random() * Math.PI;
         this.flipSpeed = 0.02 + Math.random() * 0.03;
@@ -637,12 +857,25 @@ document.addEventListener('DOMContentLoaded', () => {
         this.flip += this.flipSpeed;
         this.wingFlap += this.wingSpeed;
 
-        // Base falling speed modified by scroll velocity
         const effectiveBreeze = scrollVelocity * 0.5;
+
+        if (this.type === 2) {
+          // Dynamic Butterfly Flight Physics
+          this.flightTime += 0.025;
+          this.x += Math.sin(this.flightTime * 2.2) * 2.6 + effectiveBreeze * 0.4;
+          this.y += Math.cos(this.flightTime * 1.6) * 1.6 + this.speedY;
+          this.angle = Math.sin(this.flightTime * 2.2) * 0.25;
+
+          if (this.y > height + 60 || this.y < -80 || this.x < -80 || this.x > width + 80) {
+            this.reset(false);
+          }
+          return;
+        }
+
+        // Falling Petals Physics
         this.y += this.speedY + Math.abs(scrollVelocity * 0.2);
         this.x += this.speedX + Math.sin(this.swing) * 1.2 + effectiveBreeze * 0.3;
 
-        // Reset if out of viewport
         if (this.y > height + 40 || this.x < -60 || this.x > width + 60) {
           this.reset(false);
           this.y = -25;
@@ -655,9 +888,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.rotate(this.angle);
 
         if (this.type === 0) {
-          // ==============================
           // 🌸 MARIGOLD (GENDA) PETAL
-          // ==============================
           const scaleX = Math.cos(this.flip);
           ctx.scale(scaleX, 1);
           ctx.beginPath();
@@ -666,9 +897,9 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.bezierCurveTo(-this.size * 0.7, this.size * 0.7, -this.size * 0.8, -this.size * 0.4, 0, -this.size);
           
           const grad = ctx.createLinearGradient(0, -this.size, 0, this.size);
-          grad.addColorStop(0, '#FBBF24');   // Bright Saffron Gold
-          grad.addColorStop(0.5, '#F59E0B'); // Warm Amber
-          grad.addColorStop(1, '#D97706');   // Deep Terracotta Gold
+          grad.addColorStop(0, '#FBBF24');
+          grad.addColorStop(0.5, '#F59E0B');
+          grad.addColorStop(1, '#D97706');
           ctx.fillStyle = grad;
           ctx.globalAlpha = this.opacity;
           ctx.shadowColor = 'rgba(245, 158, 11, 0.4)';
@@ -676,9 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.fill();
 
         } else if (this.type === 1) {
-          // ==============================
           // 🪷 LOTUS / ROSE (KAMAL) PETAL
-          // ==============================
           const scaleX = Math.sin(this.flip);
           ctx.scale(scaleX, 1);
           ctx.beginPath();
@@ -687,9 +916,9 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.quadraticCurveTo(-this.size * 0.9, -this.size * 0.2, 0, -this.size * 1.1);
 
           const grad = ctx.createLinearGradient(0, -this.size, 0, this.size);
-          grad.addColorStop(0, '#FDA4AF');   // Soft Lotus Petal Pink
-          grad.addColorStop(0.6, '#F43F5E'); // Rich Varanasi Rose
-          grad.addColorStop(1, '#BE123C');   // Deep Sacred Crimson
+          grad.addColorStop(0, '#FDA4AF');
+          grad.addColorStop(0.6, '#F43F5E');
+          grad.addColorStop(1, '#BE123C');
           ctx.fillStyle = grad;
           ctx.globalAlpha = this.opacity * 0.92;
           ctx.shadowColor = 'rgba(244, 63, 94, 0.35)';
@@ -697,50 +926,11 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.fill();
 
         } else if (this.type === 2) {
-          // ==============================
-          // 🦋 GOLDEN SACRED BUTTERFLY
-          // ==============================
-          const flap = Math.sin(this.wingFlap);
-          const wingSpan = Math.abs(flap) * this.size * 0.9 + this.size * 0.2;
-
-          ctx.shadowColor = 'rgba(234, 179, 8, 0.75)';
-          ctx.shadowBlur = 10;
-          ctx.globalAlpha = this.opacity;
-
-          // Left Wing
-          ctx.save();
-          ctx.beginPath();
-          ctx.ellipse(-wingSpan * 0.5, -this.size * 0.2, wingSpan * 0.5, this.size * 0.7, -0.2, 0, Math.PI * 2);
-          const leftGrad = ctx.createRadialGradient(-wingSpan * 0.5, -this.size * 0.2, 1, -wingSpan * 0.5, -this.size * 0.2, this.size);
-          leftGrad.addColorStop(0, '#FEF08A');
-          leftGrad.addColorStop(0.5, '#EAB308');
-          leftGrad.addColorStop(1, '#B45309');
-          ctx.fillStyle = leftGrad;
-          ctx.fill();
-          ctx.restore();
-
-          // Right Wing
-          ctx.save();
-          ctx.beginPath();
-          ctx.ellipse(wingSpan * 0.5, -this.size * 0.2, wingSpan * 0.5, this.size * 0.7, 0.2, 0, Math.PI * 2);
-          const rightGrad = ctx.createRadialGradient(wingSpan * 0.5, -this.size * 0.2, 1, wingSpan * 0.5, -this.size * 0.2, this.size);
-          rightGrad.addColorStop(0, '#FEF08A');
-          rightGrad.addColorStop(0.5, '#EAB308');
-          rightGrad.addColorStop(1, '#B45309');
-          ctx.fillStyle = rightGrad;
-          ctx.fill();
-          ctx.restore();
-
-          // Torso & Antennae
-          ctx.beginPath();
-          ctx.ellipse(0, 0, 1.8, this.size * 0.6, 0, 0, Math.PI * 2);
-          ctx.fillStyle = '#78350F';
-          ctx.fill();
+          // 🦋 HYPER-REALISTIC GOLDEN BUTTERFLY
+          drawRealisticButterfly(ctx, this.size, this.wingFlap, this.opacity);
 
         } else if (this.type === 3) {
-          // ==============================
           // ✨ SACRED GOLDEN SPARKLE DUST
-          // ==============================
           ctx.beginPath();
           ctx.arc(0, 0, this.size, 0, Math.PI * 2);
           ctx.fillStyle = '#FEF08A';
@@ -765,10 +955,22 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!effectsActive) return;
 
       ctx.clearRect(0, 0, width, height);
+
+      // Render regular particles
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
       }
+
+      // Render 3-4s Opening Ceremony Butterflies
+      for (let j = openingButterflies.length - 1; j >= 0; j--) {
+        openingButterflies[j].update();
+        openingButterflies[j].draw();
+        if (openingButterflies[j].life >= openingButterflies[j].maxLife) {
+          openingButterflies.splice(j, 1);
+        }
+      }
+
       animFrameId = requestAnimationFrame(renderEffects);
     }
 
@@ -794,15 +996,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (now - lastSparkleTime < 50) return;
       lastSparkleTime = now;
 
-      // Find an inactive sparkle or repurpose oldest particle
       const p = particles[Math.floor(Math.random() * particles.length)];
-      p.x = clientX + (Math.random() - 0.5) * 20;
-      p.y = clientY + (Math.random() - 0.5) * 20;
-      p.type = 3;
-      p.speedY = 0.5 + Math.random();
-      p.speedX = (Math.random() - 0.5) * 1.5;
-      p.size = 3.5 + Math.random() * 3;
-      p.opacity = 1;
+      if (p && p.type !== 2) {
+        p.x = clientX + (Math.random() - 0.5) * 20;
+        p.y = clientY + (Math.random() - 0.5) * 20;
+        p.type = 3;
+        p.speedY = 0.5 + Math.random();
+        p.speedX = (Math.random() - 0.5) * 1.5;
+        p.size = 3.5 + Math.random() * 3;
+        p.opacity = 1;
+      }
     };
 
     window.addEventListener('mousemove', (e) => spawnSparkleAt(e.clientX, e.clientY), { passive: true });

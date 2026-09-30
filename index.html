@@ -65,35 +65,67 @@
   <canvas id="royalEffectsCanvas" class="royal-effects-canvas" aria-hidden="true"></canvas>
 
   <!-- ==========================================================================
-       ROYAL OPENING PRELOADER & WELCOME AUDIO (3-4s Reveal Experience)
+       ROYAL GATEMAN PALACE GATEWAY & WELCOME REVEAL (3-4s Opening Experience)
        ========================================================================== -->
   <div class="royal-preloader" id="royalPreloader">
-    <div class="preloader-emblem">
-      <div class="preloader-ring"></div>
-      <div class="preloader-ring ring-outer"></div>
-      <div class="preloader-monogram">RKP</div>
-    </div>
-    <div class="preloader-title">Hotel Radhe Krishna Palace</div>
-    <div class="preloader-subtitle">Varanasi • Sacred Hospitality</div>
-
-    <!-- Live Audio Waveform Status -->
-    <div class="preloader-audio-status" id="preloaderAudioStatus">
-      <span class="audio-wave-bars">
-        <span class="bar bar-1"></span>
-        <span class="bar bar-2"></span>
-        <span class="bar bar-3"></span>
-        <span class="bar bar-4"></span>
-      </span>
-      <span class="audio-text-note" id="audioTextNote">🎵 Welcome Chime Playing (3.6s)</span>
+    <!-- Left Palace Gate Door -->
+    <div class="palace-gate-door gate-left" id="gateLeft">
+      <div class="gate-jaali-pattern"></div>
+      <div class="gate-arch-crest"></div>
+      <div class="gate-handle-mount">
+        <div class="gate-lion-knocker">
+          <div class="knocker-ring"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- 3.2s Smooth Fill Progress Bar -->
-    <div class="preloader-progress-track">
-      <div class="preloader-progress-bar" id="preloaderProgressBar"></div>
+    <!-- Right Palace Gate Door -->
+    <div class="palace-gate-door gate-right" id="gateRight">
+      <div class="gate-jaali-pattern"></div>
+      <div class="gate-arch-crest"></div>
+      <div class="gate-handle-mount">
+        <div class="gate-lion-knocker">
+          <div class="knocker-ring"></div>
+        </div>
+      </div>
     </div>
 
-    <div class="preloader-tap-hint" id="preloaderTapHint">
-      <i class="fa-solid fa-volume-high"></i> Tap anywhere for sound
+    <!-- Gateman Ceremonial Welcome & Emblem Content (Center) -->
+    <div class="gateman-center-portal">
+      <!-- Traditional Folded Hands Pranam Greeting -->
+      <div class="gateman-pranam-crest">
+        <span class="gateman-pranam-icon">🙏</span>
+        <div class="gateman-tagline">अतिथि देवो भव • ATITHI DEVO BHAVA</div>
+      </div>
+
+      <div class="preloader-emblem">
+        <div class="preloader-ring"></div>
+        <div class="preloader-ring ring-outer"></div>
+        <div class="preloader-monogram">RKP</div>
+      </div>
+
+      <div class="preloader-title">Hotel Radhe Krishna Palace</div>
+      <div class="gateman-subtitle">Palace Gates Opening • Sacred Varanasi Hospitality</div>
+
+      <!-- Live Audio Waveform Status -->
+      <div class="preloader-audio-status" id="preloaderAudioStatus">
+        <span class="audio-wave-bars">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+          <span class="bar bar-4"></span>
+        </span>
+        <span class="audio-text-note" id="audioTextNote">🎵 Welcome Chime Playing (3.6s)</span>
+      </div>
+
+      <!-- 3.2s Smooth Fill Progress Bar -->
+      <div class="preloader-progress-track">
+        <div class="preloader-progress-bar" id="preloaderProgressBar"></div>
+      </div>
+
+      <div class="preloader-tap-hint" id="preloaderTapHint">
+        <i class="fa-solid fa-volume-high"></i> Click / Tap anywhere to open gates with sound
+      </div>
     </div>
   </div>
 
