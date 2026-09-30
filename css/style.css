@@ -187,16 +187,18 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.82rem;
   color: #FDE68A;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: relative;
   z-index: 1001;
+  text-align: center;
 }
 
 .announcement-text {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  justify-content: center;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
@@ -212,9 +214,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .announcement-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: none !important;
 }
 
 .contact-pill-link {
