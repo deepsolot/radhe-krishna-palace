@@ -143,6 +143,7 @@
       <span class="announcement-badge">Direct Deal</span>
       <span>✨ <strong>Direct Booking Privilege:</strong> Save 15% OFF + Guaranteed Clean Sanitized Rooms • 24/7 Front Desk & WhatsApp Booking: <a href="tel:+919696619832" class="js-phone-link js-phone-text" style="color:#FFF; text-decoration:underline;">+91 96966 19832</a></span>
       <div class="announcement-actions" style="margin-left:auto;">
+        <a href="#quick-pay" class="contact-pill-link" style="background:rgba(212,175,55,0.22); border:1px solid rgba(212,175,55,0.6); color:#FDE68A;"><i class="fa-solid fa-qrcode"></i> Scan & Pay (UPI QR)</a>
         <button type="button" id="btnToggleEffects" class="contact-pill-link effects-toggle-btn" title="Replay 4-Second Flower & Butterfly Welcome Shower" style="cursor:pointer; background:rgba(251,113,133,0.18); border:1px solid rgba(251,113,133,0.45); color:#FECDD3;">
           <i class="fa-solid fa-spa"></i> <span id="effectsStatusText">🌸 Flowers & Butterflies (4s)</span>
         </button>
@@ -175,6 +176,7 @@
           <li><a href="#home" class="nav-link">Home</a></li>
           <li><a href="#booking-engine" class="nav-link">Book Direct</a></li>
           <li><a href="#rooms" class="nav-link">Rooms & Rates</a></li>
+          <li><a href="#quick-pay" class="nav-link" style="color:#FDE68A;"><i class="fa-solid fa-qrcode" style="color:var(--color-primary); margin-right:3px;"></i> Scan & Pay</a></li>
           <li><a href="#medical-care" class="nav-link">Cancer Hospital Stay</a></li>
           <li><a href="#gallery" class="nav-link">Photo Gallery</a></li>
           <li><a href="#amenities" class="nav-link">Amenities</a></li>
@@ -233,6 +235,7 @@
     <ul class="drawer-links">
       <li><a href="#home" class="drawer-link">Home <i class="fa-solid fa-chevron-right"></i></a></li>
       <li><a href="#booking-engine" class="drawer-link">Book Direct (Save 15%) <i class="fa-solid fa-chevron-right"></i></a></li>
+      <li><a href="#quick-pay" class="drawer-link" style="color:#FDE68A;"><i class="fa-solid fa-qrcode" style="color:#FBBF24;"></i> Scan & Pay (UPI QR) <i class="fa-solid fa-chevron-right"></i></a></li>
       <li><a href="#rooms" class="drawer-link">Rooms & Rates <i class="fa-solid fa-chevron-right"></i></a></li>
       <li><a href="#medical-care" class="drawer-link">Hospital Attendant Stay <i class="fa-solid fa-chevron-right"></i></a></li>
       <li><a href="#gallery" class="drawer-link">Real Photo Gallery <i class="fa-solid fa-chevron-right"></i></a></li>
@@ -398,11 +401,14 @@
             </div>
 
             <div class="calc-cta-group">
+              <button type="button" class="btn-confirm-pay js-open-qr-modal" id="btnCalcPayAdvance" title="Scan QR to Pay Advance Token">
+                <i class="fa-solid fa-qrcode"></i> Quick Advance Pay (Scan QR)
+              </button>
               <a href="https://wa.me/919696619832" class="btn-confirm-wa" id="resWaBtn" target="_blank" rel="noopener">
                 <i class="fa-brands fa-whatsapp"></i> Confirm on WhatsApp
               </a>
               <a href="tel:+919696619832" class="btn-confirm-call js-phone-link">
-                <i class="fa-solid fa-phone"></i> Call Reception Now
+                <i class="fa-solid fa-phone"></i> Call Reception
               </a>
             </div>
           </div>
@@ -479,6 +485,9 @@
                 <button type="button" class="btn-book-room js-quick-book-room" data-room-type="standard">
                   <i class="fa-solid fa-calendar-check"></i> Book Direct
                 </button>
+                <button type="button" class="btn-qr-room js-open-qr-modal" data-room-name="Standard Budget Room" data-room-price="899" title="Scan QR & Pay Advance">
+                  <i class="fa-solid fa-qrcode"></i> Pay
+                </button>
                 <a href="https://wa.me/919696619832?text=Namaste!%20I%20want%20to%20book%20the%20Standard%20Room%20(₹899/night)%20at%20Hotel%20Radhe%20Krishna%20Palace" class="btn-wa-room js-wa-link" title="Book on WhatsApp">
                   <i class="fa-brands fa-whatsapp"></i>
                 </a>
@@ -508,7 +517,10 @@
               </div>
               <div class="room-footer">
                 <button type="button" class="btn-book-room js-quick-book-room" data-room-type="deluxe">
-                  <i class="fa-solid fa-calendar-check"></i> Book Direct (Save 15%)
+                  <i class="fa-solid fa-calendar-check"></i> Book Direct
+                </button>
+                <button type="button" class="btn-qr-room js-open-qr-modal" data-room-name="Deluxe AC Room" data-room-price="1299" title="Scan QR & Pay Advance">
+                  <i class="fa-solid fa-qrcode"></i> Pay
                 </button>
                 <a href="https://wa.me/919696619832?text=Namaste!%20I%20want%20to%20book%20the%20Deluxe%20AC%20Room%20(₹1,299/night)%20at%20Hotel%20Radhe%20Krishna%20Palace" class="btn-wa-room js-wa-link" title="Book on WhatsApp">
                   <i class="fa-brands fa-whatsapp"></i>
@@ -540,9 +552,159 @@
                 <button type="button" class="btn-book-room js-quick-book-room" data-room-type="family">
                   <i class="fa-solid fa-calendar-check"></i> Book Direct
                 </button>
+                <button type="button" class="btn-qr-room js-open-qr-modal" data-room-name="Super Deluxe Family Suite" data-room-price="1799" title="Scan QR & Pay Advance">
+                  <i class="fa-solid fa-qrcode"></i> Pay
+                </button>
                 <a href="https://wa.me/919696619832?text=Namaste!%20I%20want%20to%20book%20the%20Super%20Deluxe%20Family%20Suite%20(₹1,799/night)%20at%20Hotel%20Radhe%20Krishna%20Palace" class="btn-wa-room js-wa-link" title="Book on WhatsApp">
                   <i class="fa-brands fa-whatsapp"></i>
                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         QUICK BOOKING & UPI PAYMENT GATEWAY (PREMIUM QR & SCAN TO BOOK)
+         ========================================================================== -->
+    <section class="quick-pay-section" id="quick-pay">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 2.75rem;">
+          <div class="section-badge"><i class="fa-solid fa-shield-halved"></i> 100% Direct & Safe Payment</div>
+          <h2 class="section-title">Scan & Book • Instant UPI Payment Gateway</h2>
+          <p class="section-subtitle">
+            Lock your sanitized room in 10 seconds with 0% transaction fees. Direct booking confirmation to hotel owner <strong>Thakur Adarsh</strong>.
+          </p>
+        </div>
+
+        <div class="quick-pay-grid">
+          <!-- Left Column: Luxury Royal QR Standee -->
+          <div class="qr-standee-wrapper reveal-init">
+            <div class="qr-standee-card">
+              <!-- Header -->
+              <div class="qr-standee-header">
+                <div class="qr-hotel-brand">
+                  <div class="qr-hotel-name">Radhe Krishna Palace</div>
+                  <div class="qr-hotel-sub">Official UPI Gateway</div>
+                </div>
+                <div class="phonepe-brand-badge">
+                  <span class="phonepe-logo-icon">पे</span> PhonePe Verified
+                </div>
+              </div>
+
+              <!-- White QR Frame -->
+              <div class="qr-code-display-frame">
+                <img src="assets/images/phonepe_qr_code.png" alt="PhonePe UPI QR Code Thakur Adarsh Hotel Radhe Krishna Palace" class="qr-code-img" id="mainQrCodeImg">
+              </div>
+
+              <!-- Account details -->
+              <div class="qr-account-info">
+                <div class="qr-account-name">
+                  Thakur Adarsh <i class="fa-solid fa-circle-check" title="Verified Hotel Account"></i>
+                </div>
+                <div class="qr-bank-tag">
+                  Bank Of Baroda • A/c ending <strong>7091</strong>
+                </div>
+                <div style="font-size:0.8rem; color:#E5E7EB; margin-top:0.35rem; font-weight:600;">
+                  UPI Mobile: <a href="tel:+919696619832" style="color:#FBBF24; text-decoration:none;">+91 96966 19832</a>
+                </div>
+              </div>
+
+              <!-- Copy UPI ID container -->
+              <div class="upi-copy-container">
+                <span class="upi-id-text" id="upiIdDisplay">9696619832@ybl</span>
+                <button type="button" class="btn-copy-upi-action" id="btnCopyUpiId">
+                  <i class="fa-regular fa-copy"></i> Copy UPI
+                </button>
+              </div>
+
+              <!-- Supported Apps row -->
+              <div class="supported-apps-row">
+                <span class="app-pill">PhonePe</span>
+                <span class="app-pill">Google Pay</span>
+                <span class="app-pill">Paytm</span>
+                <span class="app-pill">BHIM</span>
+                <span class="app-pill">Cred</span>
+                <span class="app-pill">Any UPI App</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: 3-Step Instant Room Lock Flow -->
+          <div class="quick-pay-details reveal-init delay-1">
+            <div class="quick-pay-steps-card">
+              <h3 style="font-size:1.35rem; font-weight:700; color:#FFF; margin-bottom:0.4rem; display:flex; align-items:center; gap:0.5rem;">
+                <i class="fa-solid fa-bolt" style="color:#F59E0B;"></i> Instant Room Lock in 3 Steps
+              </h3>
+              <p style="font-size:0.86rem; color:#9CA3AF; margin:0;">
+                No agent fees, no 20% OTA markup. Guaranteed sanitized room reservation directly in our front desk register.
+              </p>
+
+              <div class="steps-list">
+                <div class="pay-step-item">
+                  <div class="step-num-badge">1</div>
+                  <div class="step-content">
+                    <h5>Scan QR or Click Mobile Pay</h5>
+                    <p>Open PhonePe, GPay, Paytm or click the mobile payment button below to open your UPI app directly.</p>
+                  </div>
+                </div>
+
+                <div class="pay-step-item">
+                  <div class="step-num-badge">2</div>
+                  <div class="step-content">
+                    <h5>Pay Room Advance Token</h5>
+                    <p>Select your room tariff or pay a minimum ₹500 token to lock and guarantee your check-in dates.</p>
+                  </div>
+                </div>
+
+                <div class="pay-step-item">
+                  <div class="step-num-badge">3</div>
+                  <div class="step-content">
+                    <h5>Send Screenshot on WhatsApp</h5>
+                    <p>Click the green WhatsApp button below to share the transaction screenshot. Front desk issues instant booking voucher!</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Token Amount Selector -->
+              <div class="amount-selector-block">
+                <label class="amount-selector-label"><i class="fa-solid fa-coins" style="color:#F59E0B;"></i> Select Advance Amount to Pay:</label>
+                <div class="amount-chips-grid">
+                  <button type="button" class="amount-chip-btn active" data-amount="500">
+                    <span>Token Advance</span>
+                    <span class="chip-price">₹500</span>
+                  </button>
+                  <button type="button" class="amount-chip-btn" data-amount="899">
+                    <span>Standard 1N</span>
+                    <span class="chip-price">₹899</span>
+                  </button>
+                  <button type="button" class="amount-chip-btn" data-amount="1299">
+                    <span>Deluxe AC 1N</span>
+                    <span class="chip-price">₹1,299</span>
+                  </button>
+                  <button type="button" class="amount-chip-btn" data-amount="1799">
+                    <span>Family Suite 1N</span>
+                    <span class="chip-price">₹1,799</span>
+                  </button>
+                </div>
+
+                <!-- Action Buttons: Mobile Pay Intent & WhatsApp Proof -->
+                <div class="pay-action-buttons">
+                  <a href="upi://pay?pa=9696619832@ybl&pn=Thakur%20Adarsh&am=500&cu=INR&tn=Hotel%20Radhe%20Krishna%20Palace%20Booking" class="btn-upi-mobile-intent" id="btnDynamicUpiPay">
+                    <i class="fa-solid fa-mobile-screen-button"></i> Pay ₹500 via Any UPI App
+                  </a>
+                  <a href="https://wa.me/919696619832?text=Namaste%20Hotel%20Radhe%20Krishna%20Palace!%20%F0%9F%99%8F%20I%20have%20paid%20advance%20booking%20amount%20via%20UPI.%20Please%20find%20my%20screenshot%20attached." class="btn-wa-payment-submit js-wa-link" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-whatsapp"></i> Send Payment Screenshot
+                  </a>
+                </div>
+
+                <!-- Trust Guarantees -->
+                <div class="pay-security-pills">
+                  <span class="sec-pill"><i class="fa-solid fa-circle-check"></i> 100% Safe & Direct to Owner</span>
+                  <span class="sec-pill"><i class="fa-solid fa-lock"></i> Bank of Baroda Secure</span>
+                  <span class="sec-pill"><i class="fa-solid fa-rotate-left"></i> Medical Rescheduling Priority</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1157,6 +1319,54 @@
           <i class="fa-solid fa-floppy-disk"></i> Save & Update Website
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       QUICK PAY POPUP MODAL (1-Click QR Access from Anywhere)
+       ========================================================================== -->
+  <div class="quick-pay-modal-backdrop" id="quickPayModalBackdrop"></div>
+  <div class="quick-pay-modal" id="quickPayModal" role="dialog" aria-modal="true" aria-labelledby="modalPayTitle">
+    <button type="button" class="modal-close-btn" id="modalPayCloseBtn" aria-label="Close Payment Modal">&times;</button>
+    <div style="text-align:center;">
+      <div class="phonepe-brand-badge" style="margin-bottom:0.75rem;">
+        <span class="phonepe-logo-icon">पे</span> PhonePe Verified UPI
+      </div>
+      <h3 id="modalPayTitle" style="font-size:1.25rem; font-weight:700; color:#FFF; margin-bottom:0.25rem;">
+        Scan & Pay Advance Booking
+      </h3>
+      <div style="font-size:0.85rem; color:#FBBF24;" id="modalRoomTargetText">
+        Hotel Radhe Krishna Palace, Varanasi
+      </div>
+
+      <div class="qr-code-display-frame" style="margin:0.85rem auto; padding:0.75rem;">
+        <img src="assets/images/phonepe_qr_code.png" alt="PhonePe QR Code Thakur Adarsh" class="qr-code-img" style="width:200px; height:200px;">
+      </div>
+
+      <div class="qr-account-info" style="margin-top:0.25rem;">
+        <div class="qr-account-name" style="font-size:0.98rem;">
+          Thakur Adarsh <i class="fa-solid fa-circle-check" style="color:#10B981;"></i>
+        </div>
+        <div class="qr-bank-tag">
+          Bank Of Baroda • Primary UPI: <strong>+91 96966 19832</strong>
+        </div>
+      </div>
+
+      <div class="upi-copy-container" style="margin:0.85rem 0;">
+        <span class="upi-id-text">9696619832@ybl</span>
+        <button type="button" class="btn-copy-upi-action js-copy-modal-upi">
+          <i class="fa-regular fa-copy"></i> Copy UPI
+        </button>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0.65rem; margin-top:0.75rem;">
+        <a href="upi://pay?pa=9696619832@ybl&pn=Thakur%20Adarsh&am=500&cu=INR&tn=Hotel%20Radhe%20Krishna%20Palace%20Advance" class="btn-upi-mobile-intent" style="font-size:0.88rem; padding:0.75rem 1rem;">
+          <i class="fa-solid fa-bolt"></i> Pay via UPI App (Mobile)
+        </a>
+        <a href="https://wa.me/919696619832?text=Namaste%20Hotel%20Radhe%20Krishna%20Palace!%20%F0%9F%99%8F%20I%20am%20sharing%20my%20UPI%20advance%20payment%20screenshot%20for%20room%20confirmation." class="btn-wa-payment-submit js-wa-link" target="_blank" rel="noopener" style="font-size:0.88rem; padding:0.75rem 1rem;">
+          <i class="fa-brands fa-whatsapp"></i> Send Screenshot on WhatsApp
+        </a>
+      </div>
     </div>
   </div>
 

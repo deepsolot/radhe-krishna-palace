@@ -297,6 +297,94 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('✅ Contact numbers updated! Try testing the WhatsApp or Call buttons now.');
   });
 
+  // ==========================================================================
+  // QUICK BOOKING & UPI PAYMENT GATEWAY ENGINE
+  // ==========================================================================
+  const quickPayModal = document.getElementById('quickPayModal');
+  const quickPayBackdrop = document.getElementById('quickPayModalBackdrop');
+  const modalCloseBtn = document.getElementById('modalPayCloseBtn');
+  const modalRoomTarget = document.getElementById('modalRoomTargetText');
+  const btnDynamicUpi = document.getElementById('btnDynamicUpiPay');
+  const amountChips = document.querySelectorAll('.amount-chip-btn');
+  const copyUpiButtons = document.querySelectorAll('.btn-copy-upi-action, .js-copy-modal-upi');
+
+  const defaultUpiId = '9696619832@ybl';
+  let selectedAdvanceAmount = 500;
+
+  function updateDynamicPaymentLinks(amount, roomName = '') {
+    selectedAdvanceAmount = amount;
+    if (btnDynamicUpi) {
+      const note = encodeURIComponent(`Hotel Radhe Krishna Palace Booking ${roomName}`.trim());
+      btnDynamicUpi.setAttribute('href', `upi://pay?pa=${defaultUpiId}&pn=Thakur%20Adarsh&am=${amount}&cu=INR&tn=${note}`);
+      btnDynamicUpi.innerHTML = `<i class="fa-solid fa-mobile-screen-button"></i> Pay ₹${amount} via Any UPI App`;
+    }
+  }
+
+  // Amount Chip Click Handlers
+  amountChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      amountChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const amt = chip.getAttribute('data-amount') || '500';
+      updateDynamicPaymentLinks(amt);
+    });
+  });
+
+  // Copy UPI Buttons Handler
+  copyUpiButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      navigator.clipboard?.writeText(defaultUpiId).then(() => {
+        const originalText = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = `<i class="fa-solid fa-check"></i> Copied!`;
+        showToast(`📋 UPI ID Copied: ${defaultUpiId} (Thakur Adarsh)`);
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = originalText;
+        }, 2500);
+      }).catch(() => {
+        showToast(`UPI ID: ${defaultUpiId}`);
+      });
+    });
+  });
+
+  // Modal Open & Close Functions
+  function openQuickPayModal(roomName = '', roomPrice = '') {
+    if (modalRoomTarget) {
+      if (roomName && roomPrice) {
+        modalRoomTarget.textContent = `Selected: ${roomName} (₹${roomPrice}/nt)`;
+      } else {
+        modalRoomTarget.textContent = 'Hotel Radhe Krishna Palace, Varanasi';
+      }
+    }
+    quickPayModal?.classList.add('open');
+    quickPayBackdrop?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeQuickPayModal() {
+    quickPayModal?.classList.remove('open');
+    quickPayBackdrop?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.js-open-qr-modal').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const rName = trigger.getAttribute('data-room-name') || '';
+      const rPrice = trigger.getAttribute('data-room-price') || '';
+      openQuickPayModal(rName, rPrice);
+    });
+  });
+
+  modalCloseBtn?.addEventListener('click', closeQuickPayModal);
+  quickPayBackdrop?.addEventListener('click', closeQuickPayModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeQuickPayModal();
+  });
+
   // Simple Multi-Language Toggle (English / Hindi हिंदी)
   const langToggleBtn = document.getElementById('langToggleBtn');
   let currentLang = 'en';
