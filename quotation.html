@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel Website Development Quotation — Hotel Radhe Krishna Palace, Varanasi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+    @page {
+      size: A4;
+      margin: 10mm 12mm 10mm 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1E293B;
+      background: #FFFFFF;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .quotation-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Header styling */
+    .header-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2.5px solid #D4AF37;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0F172A;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 10px;
+      font-weight: 600;
+      color: #9A7B1C;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+
+    .doc-badge {
+      background: #0F172A;
+      color: #F8FAFC;
+      padding: 5px 12px;
+      border-radius: 6px;
+      text-align: right;
+    }
+
+    .doc-type {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #F59E0B;
+    }
+
+    .doc-ref {
+      font-size: 9px;
+      color: #94A3B8;
+      margin-top: 2px;
+    }
+
+    /* Meta Grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 9px 12px;
+      margin-bottom: 11px;
+    }
+
+    .meta-item {
+      font-size: 10.5px;
+    }
+
+    .meta-label {
+      font-weight: 700;
+      color: #64748B;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 0.04em;
+    }
+
+    .meta-value {
+      font-weight: 600;
+      color: #0F172A;
+      margin-top: 1px;
+    }
+
+    .meta-value a {
+      color: #B45309;
+      text-decoration: none;
+    }
+
+    /* Section Headings */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 10px 0 6px 0;
+    }
+
+    .section-icon {
+      width: 17px;
+      height: 17px;
+      background: #FEF3C7;
+      color: #B45309;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9.5px;
+      font-weight: 800;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0F172A;
+      letter-spacing: -0.01em;
+    }
+
+    /* ROI Highlights Box */
+    .roi-banner {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 1px solid #FDE68A;
+      border-left: 3.5px solid #D97706;
+      border-radius: 6px;
+      padding: 7px 11px;
+      margin-bottom: 10px;
+    }
+
+    .roi-banner h4 {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #92400E;
+      margin-bottom: 3px;
+    }
+
+    .roi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 3px;
+    }
+
+    .roi-item {
+      font-size: 9.5px;
+      color: #78350F;
+      line-height: 1.35;
+    }
+
+    .roi-item strong {
+      display: block;
+      color: #451A03;
+      font-size: 10px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 9px;
+    }
+
+    th {
+      background: #0F172A;
+      color: #FFFFFF;
+      font-weight: 600;
+      text-align: left;
+      padding: 5.5px 8px;
+      font-size: 9.5px;
+      letter-spacing: 0.03em;
+    }
+
+    th.text-right {
+      text-align: right;
+    }
+
+    td {
+      padding: 4.5px 8px;
+      border-bottom: 1px solid #E2E8F0;
+      font-size: 9.5px;
+      vertical-align: middle;
+    }
+
+    td.text-right {
+      text-align: right;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) td {
+      background: #F8FAFC;
+    }
+
+    .item-desc {
+      color: #64748B;
+      font-size: 8.5px;
+      margin-top: 1px;
+      line-height: 1.25;
+    }
+
+    /* Special Offer Box */
+    .special-offer-card {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: #FFFFFF;
+      border-radius: 6px;
+      padding: 9px 14px;
+      margin: 9px 0 10px 0;
+      border: 1.5px solid #D4AF37;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .offer-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #FBBF24;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .offer-subtitle {
+      font-size: 9px;
+      color: #E2E8F0;
+      margin-top: 1px;
+      max-width: 440px;
+      line-height: 1.3;
+    }
+
+    .offer-price-box {
+      text-align: right;
+    }
+
+    .strike-price {
+      font-size: 10px;
+      color: #94A3B8;
+      text-decoration: line-through;
+    }
+
+    .deal-price {
+      font-size: 20px;
+      font-weight: 800;
+      color: #FDE047;
+      font-family: 'Playfair Display', Georgia, serif;
+      line-height: 1;
+    }
+
+    .all-inc-tag {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #A7F3D0;
+      font-weight: 700;
+    }
+
+    /* Bonus Row */
+    .bonus-box {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-bottom: 9px;
+    }
+
+    .bonus-header {
+      font-size: 10px;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 2px;
+    }
+
+    .bonus-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 9px;
+      color: #14532D;
+    }
+
+    /* Payment Terms */
+    .terms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 9px;
+    }
+
+    .term-card {
+      border: 1px solid #E2E8F0;
+      border-radius: 5px;
+      padding: 6px 9px;
+      background: #F8FAFC;
+    }
+
+    .term-title {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    .term-desc {
+      font-size: 8.5px;
+      color: #64748B;
+      margin-top: 1px;
+    }
+
+    /* Signatures */
+    .signature-area {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #CBD5E1;
+    }
+
+    .sig-col {
+      width: 44%;
+      text-align: center;
+    }
+
+    .sig-line {
+      border-bottom: 1px solid #64748B;
+      height: 20px;
+      margin-bottom: 3px;
+    }
+
+    .sig-label {
+      font-size: 8.5px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .doc-footer {
+      border-top: 1px solid #E2E8F0;
+      padding-top: 6px;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8.5px;
+      color: #94A3B8;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quotation-container">
+
+    <!-- Header Block -->
+    <div class="header-block">
+      <div>
+        <h1 class="brand-title">Hotel Radhe Krishna Palace</h1>
+        <div class="brand-subtitle">Varanasi • Sacred Hospitality & Direct Booking Web App</div>
+      </div>
+      <div class="doc-badge">
+        <div class="doc-type">Commercial Proposal</div>
+        <div class="doc-ref">Ref: RKP-WEB-2026/01 • Date: 01 Oct 2026</div>
+      </div>
+    </div>
+
+    <!-- Client & Project Meta Grid -->
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Client Name & Property</div>
+        <div class="meta-value">Hotel Radhe Krishna Palace (Proprietor & Management)</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Strategic Landmark</div>
+        <div class="meta-value">150m from MPMMCC Cancer Centre & BHU Trauma, Varanasi</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Primary Hotline / WhatsApp</div>
+        <div class="meta-value">+91 96966 19832 • +91 90442 41613</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Live Prototype Link</div>
+        <div class="meta-value"><a href="https://radhe-krishna-palace.vercel.app" target="_blank">https://radhe-krishna-palace.vercel.app</a></div>
+      </div>
+    </div>
+
+    <!-- ROI Banner for Varanasi Hotelier -->
+    <div class="roi-banner">
+      <h4>Direct Business Return on Investment (ROI) for Hotel Radhe Krishna Palace</h4>
+      <div class="roi-grid">
+        <div class="roi-item">
+          <strong>💰 0% Commission vs 20% OTA</strong>
+          Direct WhatsApp booking saves ₹300–₹500 per room night currently lost to MakeMyTrip & OYO.
+        </div>
+        <div class="roi-item">
+          <strong>🏥 150m Hospital Patient Attendants</strong>
+          Captures daily patient families searching Google for sanitized, peaceful budget rooms near MPMMCC.
+        </div>
+        <div class="roi-item">
+          <strong>🚪 Royal First Impression</strong>
+          3D Gateman double doors, 4s realistic butterflies, and folded hands Atithi Devo Bhava greeting.
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Scope Table -->
+    <div class="section-header">
+      <div class="section-icon">1</div>
+      <h3 class="section-title">Commercial Scope & Cost Breakdown</h3>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 50px;">#</th>
+          <th>Deliverable & Technical Scope</th>
+          <th class="text-right" style="width: 110px;">Market Value</th>
+          <th class="text-right" style="width: 110px;">Quoted Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>01</strong></td>
+          <td>
+            <strong>Custom Royal Palace UI/UX Design & Frontend Architecture</strong>
+            <div class="item-desc">High-end bespoke theme with gold accents, mobile-responsive layout, and high-speed asset loading.</div>
+          </td>
+          <td class="text-right" style="color:#64748B;">₹ 10,000</td>
+          <td class="text-right">₹ 7,000</td>
+        </tr>
+        <tr>
+          <td><strong>02</strong></td>
+          <td>
+            <strong>1-Click WhatsApp Direct Booking Engine & IST Live Time Module</strong>
+            <div class="item-desc">Interactive tariff calculation (Standard, Deluxe, Family Suite) with pre-filled WhatsApp reservation text.</div>
+          </td>
+          <td class="text-right" style="color:#64748B;">₹ 5,000</td>
+          <td class="text-right">₹ 3,500</td>
+        </tr>
+        <tr>
+          <td><strong>03</strong></td>
+          <td>
+            <strong>Royal Gateman 3D Door Reveal & 4s Realistic Butterfly Ceremony</strong>
+            <div class="item-desc">Parting palace double doors with Namaste Atithi Devo Bhava crest and 4-second Swallowtail butterfly shower.</div>
+          </td>
+          <td class="text-right" style="color:#64748B;">₹ 4,500</td>
+          <td class="text-right">₹ 2,500</td>
+        </tr>
+        <tr>
+          <td><strong>04</strong></td>
+          <td>
+            <strong>Hospital Proximity (150m) & Kashi Pilgrimage SEO Package</strong>
+            <div class="item-desc">Schema.org Hotel Rich Snippet, Google Maps route integration, MPMMCC hospital patient attendant target keywords.</div>
+          </td>
+          <td class="text-right" style="color:#64748B;">₹ 3,500</td>
+          <td class="text-right">₹ 2,000</td>
+        </tr>
+        <tr>
+          <td><strong>05</strong></td>
+          <td>
+            <strong>High-Performance Cloud Infrastructure & SSL HTTPS Security</strong>
+            <div class="item-desc">Ultra-fast global Edge CDN deployment, 99.9% uptime, zero server crash, and green padlock security.</div>
+          </td>
+          <td class="text-right" style="color:#64748B;">₹ 3,000</td>
+          <td class="text-right">₹ 2,000</td>
+        </tr>
+        <tr>
+          <td><strong>06</strong></td>
+          <td>
+            <strong>1-Year Custom Domain (.com / .in) + Premium Cloud Hosting</strong>
+            <div class="item-desc">Domain registration, DNS setup, SSL certificates, and lightning-fast managed hosting for 12 months.</div>
+          </td>
+          <td class="text-right" style="color:#64748B;">₹ 4,000</td>
+          <td class="text-right">₹ 2,500</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" style="font-weight:700; text-align:right; padding-right:15px;">TOTAL REGULAR PROJECT VALUE:</td>
+          <td class="text-right" style="text-decoration:line-through; color:#94A3B8;">₹ 30,000</td>
+          <td class="text-right" style="font-weight:800; color:#0F172A;">₹ 19,500</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- Special Project Offer Box -->
+    <div class="special-offer-card">
+      <div>
+        <div class="offer-title">★ SPECIAL VARANASI PRIVILEGE OFFER</div>
+        <div class="offer-subtitle">
+          Complete end-to-end website, custom UI/UX, Gateman reveal, 4s butterfly ceremony, direct WhatsApp booking engine, and 1-year custom domain + cloud hosting all included.
+        </div>
+      </div>
+      <div class="offer-price-box">
+        <div class="strike-price">Regular ₹ 19,500</div>
+        <div class="deal-price">₹ 17,999/-</div>
+        <div class="all-inc-tag">ALL-INCLUSIVE FIXED PRICE</div>
+      </div>
+    </div>
+
+    <!-- Complimentary Free Bonuses -->
+    <div class="bonus-box">
+      <div class="bonus-header">🎁 COMPLIMENTARY CLIENT BONUSES (ZERO EXTRA CHARGE)</div>
+      <div class="bonus-list">
+        <div>✓ <strong>Reception QR Standee Artwork</strong> (Printable standee for counter to scan for menu, booking, & reviews)</div>
+        <div>✓ <strong>Google Business Profile (GBP) Linking</strong></div>
+        <div>✓ <strong>60-Day Priority Support & Content Updates</strong></div>
+      </div>
+    </div>
+
+    <!-- Alternative Multi-Year Options -->
+    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:7px 12px; margin-bottom:14px; font-size:10px; color:#475569;">
+      <strong>Looking for long-term peace of mind?</strong> We offer a <strong>3-Year Domain + Cloud Hosting Package for ₹ 21,999/- All-Inclusive</strong> (Saves you ₹4,500 in future renewal fees!).
+    </div>
+
+    <!-- Payment Terms & Timeline -->
+    <div class="section-header">
+      <div class="section-icon">2</div>
+      <h3 class="section-title">Payment Terms & Project Timeline</h3>
+    </div>
+
+    <div class="terms-grid">
+      <div class="term-card">
+        <div class="term-title">Stage 1: 50% Project Advance (₹ 9,000)</div>
+        <div class="term-desc">Payable upon quotation acceptance to initiate domain registration, DNS link, and customization.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-title">Stage 2: 50% Final Settlement (₹ 8,999)</div>
+        <div class="term-desc">Payable after complete live testing on client's official custom domain and full handover.</div>
+      </div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="signature-area">
+      <div class="sig-col">
+        <div class="sig-line"></div>
+        <div class="sig-label">Authorized Signature (Web Development Agency)</div>
+      </div>
+      <div class="sig-col">
+        <div class="sig-line"></div>
+        <div class="sig-label">Client Acceptance (Hotel Radhe Krishna Palace)</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="doc-footer">
+      <div>Quotation valid for 15 days from date of issue • Hotel Radhe Krishna Palace, Varanasi</div>
+      <div>Prototype Live at: radhe-krishna-palace.vercel.app</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
