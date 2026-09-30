@@ -546,4 +546,294 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     revealElements.forEach(el => el.classList.add('reveal-visible'));
   }
+
+  // ==========================================================================
+  // SACRED WELCOME FLOWER PETALS & GOLDEN BUTTERFLIES PARTICLE ENGINE
+  // ==========================================================================
+  const canvas = document.getElementById('royalEffectsCanvas');
+  const toggleEffectsBtn = document.getElementById('btnToggleEffects');
+  const effectsStatusText = document.getElementById('effectsStatusText');
+
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    let effectsActive = localStorage.getItem('radhe_effects_enabled') !== 'false';
+    if (!effectsActive) {
+      canvas.classList.add('effects-disabled');
+      if (toggleEffectsBtn) toggleEffectsBtn.classList.add('effects-off');
+      if (effectsStatusText) effectsStatusText.textContent = 'Effects: Off';
+    }
+
+    const isMobile = window.innerWidth < 768;
+    const maxParticles = isMobile ? 22 : 38;
+    const particles = [];
+    let lastScrollY = window.scrollY;
+    let scrollVelocity = 0;
+    let scrollTimeout = null;
+
+    // Listen to scroll velocity for realistic air breeze
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
+      lastScrollY = currentScrollY;
+      scrollVelocity = Math.max(-15, Math.min(15, delta * 0.4));
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        scrollVelocity = 0;
+      }, 100);
+    }, { passive: true });
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    // Particle Factory
+    class RoyalParticle {
+      constructor(isWelcomeShower = false) {
+        this.reset(isWelcomeShower);
+      }
+
+      reset(isWelcomeShower = false) {
+        this.x = Math.random() * width;
+        this.y = isWelcomeShower ? Math.random() * height * 0.5 - height * 0.4 : -30;
+        
+        // Types: 0 = Marigold Petal, 1 = Lotus/Rose Petal, 2 = Golden Butterfly, 3 = Golden Sparkle
+        const rand = Math.random();
+        if (rand < 0.45) {
+          this.type = 0; // Marigold
+          this.size = 11 + Math.random() * 8;
+        } else if (rand < 0.80) {
+          this.type = 1; // Lotus / Rose
+          this.size = 12 + Math.random() * 9;
+        } else if (rand < 0.94) {
+          this.type = 2; // Golden Butterfly
+          this.size = 16 + Math.random() * 8;
+        } else {
+          this.type = 3; // Golden Stardust
+          this.size = 3 + Math.random() * 4;
+        }
+
+        this.speedY = 1.0 + Math.random() * 1.8;
+        this.speedX = (Math.random() - 0.5) * 1.2;
+        this.angle = Math.random() * Math.PI * 2;
+        this.angularSpeed = (Math.random() - 0.5) * 0.04;
+        this.swing = Math.random() * Math.PI * 2;
+        this.swingSpeed = 0.02 + Math.random() * 0.03;
+        this.wingFlap = Math.random() * Math.PI * 2;
+        this.wingSpeed = 0.25 + Math.random() * 0.15;
+        this.opacity = 0.75 + Math.random() * 0.25;
+        this.flip = Math.random() * Math.PI;
+        this.flipSpeed = 0.02 + Math.random() * 0.03;
+      }
+
+      update() {
+        this.angle += this.angularSpeed;
+        this.swing += this.swingSpeed;
+        this.flip += this.flipSpeed;
+        this.wingFlap += this.wingSpeed;
+
+        // Base falling speed modified by scroll velocity
+        const effectiveBreeze = scrollVelocity * 0.5;
+        this.y += this.speedY + Math.abs(scrollVelocity * 0.2);
+        this.x += this.speedX + Math.sin(this.swing) * 1.2 + effectiveBreeze * 0.3;
+
+        // Reset if out of viewport
+        if (this.y > height + 40 || this.x < -60 || this.x > width + 60) {
+          this.reset(false);
+          this.y = -25;
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+
+        if (this.type === 0) {
+          // ==============================
+          // 🌸 MARIGOLD (GENDA) PETAL
+          // ==============================
+          const scaleX = Math.cos(this.flip);
+          ctx.scale(scaleX, 1);
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size);
+          ctx.bezierCurveTo(this.size * 0.8, -this.size * 0.4, this.size * 0.7, this.size * 0.7, 0, this.size);
+          ctx.bezierCurveTo(-this.size * 0.7, this.size * 0.7, -this.size * 0.8, -this.size * 0.4, 0, -this.size);
+          
+          const grad = ctx.createLinearGradient(0, -this.size, 0, this.size);
+          grad.addColorStop(0, '#FBBF24');   // Bright Saffron Gold
+          grad.addColorStop(0.5, '#F59E0B'); // Warm Amber
+          grad.addColorStop(1, '#D97706');   // Deep Terracotta Gold
+          ctx.fillStyle = grad;
+          ctx.globalAlpha = this.opacity;
+          ctx.shadowColor = 'rgba(245, 158, 11, 0.4)';
+          ctx.shadowBlur = 6;
+          ctx.fill();
+
+        } else if (this.type === 1) {
+          // ==============================
+          // 🪷 LOTUS / ROSE (KAMAL) PETAL
+          // ==============================
+          const scaleX = Math.sin(this.flip);
+          ctx.scale(scaleX, 1);
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size * 1.1);
+          ctx.quadraticCurveTo(this.size * 0.9, -this.size * 0.2, 0, this.size * 0.9);
+          ctx.quadraticCurveTo(-this.size * 0.9, -this.size * 0.2, 0, -this.size * 1.1);
+
+          const grad = ctx.createLinearGradient(0, -this.size, 0, this.size);
+          grad.addColorStop(0, '#FDA4AF');   // Soft Lotus Petal Pink
+          grad.addColorStop(0.6, '#F43F5E'); // Rich Varanasi Rose
+          grad.addColorStop(1, '#BE123C');   // Deep Sacred Crimson
+          ctx.fillStyle = grad;
+          ctx.globalAlpha = this.opacity * 0.92;
+          ctx.shadowColor = 'rgba(244, 63, 94, 0.35)';
+          ctx.shadowBlur = 5;
+          ctx.fill();
+
+        } else if (this.type === 2) {
+          // ==============================
+          // 🦋 GOLDEN SACRED BUTTERFLY
+          // ==============================
+          const flap = Math.sin(this.wingFlap);
+          const wingSpan = Math.abs(flap) * this.size * 0.9 + this.size * 0.2;
+
+          ctx.shadowColor = 'rgba(234, 179, 8, 0.75)';
+          ctx.shadowBlur = 10;
+          ctx.globalAlpha = this.opacity;
+
+          // Left Wing
+          ctx.save();
+          ctx.beginPath();
+          ctx.ellipse(-wingSpan * 0.5, -this.size * 0.2, wingSpan * 0.5, this.size * 0.7, -0.2, 0, Math.PI * 2);
+          const leftGrad = ctx.createRadialGradient(-wingSpan * 0.5, -this.size * 0.2, 1, -wingSpan * 0.5, -this.size * 0.2, this.size);
+          leftGrad.addColorStop(0, '#FEF08A');
+          leftGrad.addColorStop(0.5, '#EAB308');
+          leftGrad.addColorStop(1, '#B45309');
+          ctx.fillStyle = leftGrad;
+          ctx.fill();
+          ctx.restore();
+
+          // Right Wing
+          ctx.save();
+          ctx.beginPath();
+          ctx.ellipse(wingSpan * 0.5, -this.size * 0.2, wingSpan * 0.5, this.size * 0.7, 0.2, 0, Math.PI * 2);
+          const rightGrad = ctx.createRadialGradient(wingSpan * 0.5, -this.size * 0.2, 1, wingSpan * 0.5, -this.size * 0.2, this.size);
+          rightGrad.addColorStop(0, '#FEF08A');
+          rightGrad.addColorStop(0.5, '#EAB308');
+          rightGrad.addColorStop(1, '#B45309');
+          ctx.fillStyle = rightGrad;
+          ctx.fill();
+          ctx.restore();
+
+          // Torso & Antennae
+          ctx.beginPath();
+          ctx.ellipse(0, 0, 1.8, this.size * 0.6, 0, 0, Math.PI * 2);
+          ctx.fillStyle = '#78350F';
+          ctx.fill();
+
+        } else if (this.type === 3) {
+          // ==============================
+          // ✨ SACRED GOLDEN SPARKLE DUST
+          // ==============================
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = '#FEF08A';
+          ctx.shadowColor = 'rgba(253, 224, 71, 0.9)';
+          ctx.shadowBlur = 12;
+          ctx.globalAlpha = (Math.sin(this.swing * 2) * 0.4 + 0.6) * this.opacity;
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    // Initialize particle pool with welcome shower
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push(new RoyalParticle(true));
+    }
+
+    // Main animation loop (optimized 60FPS)
+    let animFrameId = null;
+    function renderEffects() {
+      if (!effectsActive) return;
+
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      animFrameId = requestAnimationFrame(renderEffects);
+    }
+
+    // Start loop
+    if (effectsActive) {
+      renderEffects();
+    }
+
+    // Pause animation when tab is inactive to preserve battery
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animFrameId);
+      } else if (effectsActive) {
+        renderEffects();
+      }
+    });
+
+    // Interactive Mouse / Touch Stardust Spawn
+    let lastSparkleTime = 0;
+    const spawnSparkleAt = (clientX, clientY) => {
+      if (!effectsActive) return;
+      const now = performance.now();
+      if (now - lastSparkleTime < 50) return;
+      lastSparkleTime = now;
+
+      // Find an inactive sparkle or repurpose oldest particle
+      const p = particles[Math.floor(Math.random() * particles.length)];
+      p.x = clientX + (Math.random() - 0.5) * 20;
+      p.y = clientY + (Math.random() - 0.5) * 20;
+      p.type = 3;
+      p.speedY = 0.5 + Math.random();
+      p.speedX = (Math.random() - 0.5) * 1.5;
+      p.size = 3.5 + Math.random() * 3;
+      p.opacity = 1;
+    };
+
+    window.addEventListener('mousemove', (e) => spawnSparkleAt(e.clientX, e.clientY), { passive: true });
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        spawnSparkleAt(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    // Effects Toggle Button Handler
+    if (toggleEffectsBtn) {
+      toggleEffectsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        effectsActive = !effectsActive;
+        localStorage.setItem('radhe_effects_enabled', effectsActive ? 'true' : 'false');
+
+        if (effectsActive) {
+          canvas.classList.remove('effects-disabled');
+          toggleEffectsBtn.classList.remove('effects-off');
+          if (effectsStatusText) effectsStatusText.textContent = '🌸 Flowers & Butterflies';
+          showToast('🌸 Sacred flowers & golden butterflies enabled!');
+          renderEffects();
+        } else {
+          canvas.classList.add('effects-disabled');
+          toggleEffectsBtn.classList.add('effects-off');
+          if (effectsStatusText) effectsStatusText.textContent = 'Effects: Off';
+          showToast('Effects paused');
+          ctx.clearRect(0, 0, width, height);
+          cancelAnimationFrame(animFrameId);
+        }
+      });
+    }
+  }
 });

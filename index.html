@@ -60,6 +60,11 @@
 <body>
 
   <!-- ==========================================================================
+       SACRED WELCOME FLOWER PETALS & GOLDEN BUTTERFLIES PARTICLE CANVAS
+       ========================================================================== -->
+  <canvas id="royalEffectsCanvas" class="royal-effects-canvas" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================================
        ROYAL OPENING PRELOADER & WELCOME AUDIO (3-4s Reveal Experience)
        ========================================================================== -->
   <div class="royal-preloader" id="royalPreloader">
@@ -106,6 +111,9 @@
       <span class="announcement-badge">Direct Deal</span>
       <span>✨ <strong>Direct Booking Privilege:</strong> Save 15% OFF + Guaranteed Clean Sanitized Rooms • 24/7 Front Desk & WhatsApp Booking: <a href="tel:+919696619832" class="js-phone-link js-phone-text" style="color:#FFF; text-decoration:underline;">+91 96966 19832</a></span>
       <div class="announcement-actions" style="margin-left:auto;">
+        <button type="button" id="btnToggleEffects" class="contact-pill-link effects-toggle-btn" title="Toggle Blessing Flowers & Butterflies" style="cursor:pointer; background:rgba(251,113,133,0.18); border:1px solid rgba(251,113,133,0.45); color:#FECDD3;">
+          <i class="fa-solid fa-spa"></i> <span id="effectsStatusText">🌸 Flowers & Butterflies</span>
+        </button>
         <button type="button" id="btnReplayAudioTop" class="contact-pill-link sound-toggle-btn" title="Replay 3.5s Welcome Chime" style="cursor:pointer; background:rgba(212,175,55,0.18); border:1px solid rgba(212,175,55,0.45); color:#F9D976;">
           <i class="fa-solid fa-volume-high"></i> <span class="sound-label">Welcome Chime 🎵</span>
         </button>
@@ -221,7 +229,23 @@
         <div class="hero-overlay"></div>
       </div>
 
-      <div class="container hero-content">
+      <div class="container hero-content" style="position:relative;">
+        <!-- 3D Fluttering Golden Butterflies -->
+        <div class="decorative-butterfly butterfly-flight-1" aria-hidden="true" title="Sacred Golden Butterfly">
+          <div class="butterfly-body">
+            <div class="butterfly-wing left-wing"></div>
+            <div class="butterfly-torso"></div>
+            <div class="butterfly-wing right-wing"></div>
+          </div>
+        </div>
+        <div class="decorative-butterfly butterfly-flight-2" aria-hidden="true" title="Sacred Golden Butterfly">
+          <div class="butterfly-body">
+            <div class="butterfly-wing left-wing"></div>
+            <div class="butterfly-torso"></div>
+            <div class="butterfly-wing right-wing"></div>
+          </div>
+        </div>
+
         <div class="hero-location-badge">
           <i class="fa-solid fa-location-dot" style="color:var(--color-primary-light);"></i>
           <span data-i18n="heroBadge">Sunderpur, Lanka, Varanasi • Only 150m to MPMMCC Cancer Centre</span>

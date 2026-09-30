@@ -2410,3 +2410,144 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 15px 45px rgba(212, 175, 55, 0.25), 0 0 25px rgba(212, 175, 55, 0.15);
 }
 
+/* ==========================================================================
+   SACRED WELCOME FLOWER PETALS & GOLDEN BUTTERFLIES PARTICLE SYSTEM
+   ========================================================================== */
+.royal-effects-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99997;
+  transition: opacity 0.5s ease;
+}
+
+.royal-effects-canvas.effects-disabled {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* 3D Realistic Fluttering Golden Butterflies */
+.decorative-butterfly {
+  position: absolute;
+  pointer-events: none;
+  z-index: 12;
+  perspective: 600px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.45));
+}
+
+.butterfly-body {
+  position: relative;
+  width: 28px;
+  height: 24px;
+}
+
+.butterfly-wing {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 26px;
+  border-radius: 65% 55% 25% 75%;
+  background: radial-gradient(circle at 35% 35%, #FFF8B5 0%, #F59E0B 55%, #B45309 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.75), inset 0 0 4px rgba(255, 255, 255, 0.6);
+  opacity: 0.94;
+}
+
+.butterfly-wing.left-wing {
+  left: -15px;
+  transform-origin: right center;
+  animation: flapLeftWing 0.25s ease-in-out infinite alternate;
+}
+
+.butterfly-wing.right-wing {
+  right: -15px;
+  transform-origin: left center;
+  transform: scaleX(-1);
+  animation: flapRightWing 0.25s ease-in-out infinite alternate;
+}
+
+.butterfly-torso {
+  position: absolute;
+  left: 12px;
+  top: 3px;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, #78350F 0%, #451A03 100%);
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.8);
+}
+
+.butterfly-torso::before,
+.butterfly-torso::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 6px;
+  background: #F59E0B;
+}
+
+.butterfly-torso::before { left: 0px; transform: rotate(-25deg); }
+.butterfly-torso::after { right: 0px; transform: rotate(25deg); }
+
+@keyframes flapLeftWing {
+  0% { transform: rotateY(0deg) rotateZ(-8deg); }
+  100% { transform: rotateY(75deg) rotateZ(12deg); }
+}
+
+@keyframes flapRightWing {
+  0% { transform: scaleX(-1) rotateY(0deg) rotateZ(-8deg); }
+  100% { transform: scaleX(-1) rotateY(75deg) rotateZ(12deg); }
+}
+
+/* Butterfly Gentle Drifting Flight Paths */
+.butterfly-flight-1 {
+  top: 18%;
+  right: 14%;
+  animation: butterflyFloat1 16s ease-in-out infinite;
+}
+
+.butterfly-flight-2 {
+  bottom: 22%;
+  left: 10%;
+  animation: butterflyFloat2 20s ease-in-out infinite;
+}
+
+@keyframes butterflyFloat1 {
+  0% { transform: translate(0, 0) rotate(5deg) scale(0.95); }
+  25% { transform: translate(-45px, -30px) rotate(-8deg) scale(1.05); }
+  50% { transform: translate(-85px, 25px) rotate(12deg) scale(0.9); }
+  75% { transform: translate(-35px, 45px) rotate(-6deg) scale(1); }
+  100% { transform: translate(0, 0) rotate(5deg) scale(0.95); }
+}
+
+@keyframes butterflyFloat2 {
+  0% { transform: translate(0, 0) rotate(-10deg) scale(0.85); }
+  30% { transform: translate(55px, -45px) rotate(15deg) scale(0.95); }
+  60% { transform: translate(100px, 10px) rotate(-6deg) scale(0.9); }
+  85% { transform: translate(40px, 50px) rotate(14deg) scale(1); }
+  100% { transform: translate(0, 0) rotate(-10deg) scale(0.85); }
+}
+
+/* Effects Toggle Button in Announcement Bar */
+.effects-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+.effects-toggle-btn:hover {
+  background: rgba(251, 113, 133, 0.3) !important;
+  transform: translateY(-1px);
+}
+
+.effects-toggle-btn.effects-off {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
